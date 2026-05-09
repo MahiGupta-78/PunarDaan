@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Request Help | PUNARDAAN</title>
+
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ICONS -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="request.css"/>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+    <h2>PUNARDAAN</h2>
+  </div>
+
+  <div class="nav-right">
+
+    <button id="darkBtn">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <button class="home-btn"
+    onclick="window.location.href='../index.html'">
+      Home
+    </button>
+
+  </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <span class="badge">
+      <i class="fas fa-hand-holding-heart"></i>
+      Emergency Humanitarian Support
+    </span>
+
+    <h1>
+      Need Help?<br>
+      <span>PUNARDAAN</span> Is Here.
+    </h1>
+
+    <p>
+      Request food, blood, clothes, education support
+      or emergency assistance from NGOs and volunteers.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- REQUEST FORM -->
+
+<section class="request-section">
+
+  <div class="request-container">
+
+    <div class="left-panel">
+
+      <h2>Submit Help Request</h2>
+
+      <form id="requestForm">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your name" required>
+        </div>
+
+        <div class="input-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 9876543210" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" placeholder="example@gmail.com">
+        </div>
+
+        <div class="input-group">
+          <label>Select Help Type</label>
+
+          <select required>
+
+            <option value="">Choose Category</option>
+
+            <option>Food Help</option>
+
+            <option>Blood Emergency</option>
+
+            <option>Clothes Support</option>
+
+            <option>Books & Education</option>
+
+            <option>Medical Support</option>
+
+            <option>Shelter Request</option>
+
+          </select>
+
+        </div>
+
+        <div class="input-group">
+          <label>City</label>
+          <input type="text" placeholder="Your city">
+        </div>
+
+        <div class="input-group">
+          <label>Urgency Level</label>
+
+          <select>
+
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Emergency</option>
+
+          </select>
+
+        </div>
+
+        <div class="input-group">
+          <label>Description</label>
+
+          <textarea
+          rows="5"
+          placeholder="Explain your situation..."></textarea>
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Submit Request
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right-panel">
+
+      <div class="info-card green">
+
+        <i class="fas fa-bowl-food"></i>
+
+        <h3>Food Support</h3>
+
+        <p>
+          NGOs nearby can provide food and ration support.
+        </p>
+
+      </div>
+
+      <div class="info-card red">
+
+        <i class="fas fa-droplet"></i>
+
+        <h3>Blood Emergency</h3>
+
+        <p>
+          Connect instantly with blood donors in your city.
+        </p>
+
+      </div>
+
+      <div class="info-card blue">
+
+        <i class="fas fa-shirt"></i>
+
+        <h3>Clothes Donation</h3>
+
+        <p>
+          Receive clothes and essentials from volunteers.
+        </p>
+
+      </div>
+
+      <div class="info-card purple">
+
+        <i class="fas fa-book-open"></i>
+
+        <h3>Education Help</h3>
+
+        <p>
+          Books, school kits and learning resources support.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SUCCESS MODAL -->
+
+<div id="successModal" class="modal">
+
+  <div class="modal-content">
+
+    <i class="fas fa-circle-check"></i>
+
+    <h2>Request Submitted!</h2>
+
+    <p>
+      Your request has been sent successfully to NGOs
+      and volunteers nearby.
+    </p>
+
+    <button onclick="closeModal()">
+      OK
+    </button>
+
+  </div>
+
+</div>
+
+<!-- JS -->
+
+<script src="request.js"></script>
+
+</body>
+</html>

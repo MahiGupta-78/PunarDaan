@@ -1,0 +1,307 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f8fafc;
+  color:#111827;
+  padding-top:80px;
+}
+
+.login-btn,
+.primary-btn,
+.secondary-btn,
+.submit-btn,
+.ngo-footer button,
+.search-box button{
+  padding:12px 24px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.login-btn,
+.primary-btn,
+.submit-btn{
+  background:#16a34a;
+  color:white;
+}
+
+.secondary-btn{
+  background:#2563eb;
+  color:white;
+}
+
+.hero{
+  min-height:90vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:
+  linear-gradient(
+  135deg,
+  #16a34a,
+  #2563eb
+  );
+  color:white;
+  padding:120px 8%;
+}
+
+.badge{
+  background:rgba(255,255,255,0.2);
+  padding:12px 20px;
+  border-radius:30px;
+}
+
+.hero h1{
+  font-size:70px;
+  margin:30px 0;
+}
+
+.hero h1 span{
+  color:#facc15;
+}
+
+.hero p{
+  max-width:800px;
+  margin:auto;
+  line-height:1.8;
+  font-size:20px;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:40px;
+}
+
+.stats-section{
+  padding:100px 8%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:30px;
+  background:#0f172a;
+}
+
+.stat-box{
+  text-align:center;
+  color:white;
+}
+
+.stat-box h1{
+  color:#16a34a;
+  font-size:60px;
+}
+
+.section-title{
+  text-align:center;
+  font-size:45px;
+  margin-bottom:60px;
+}
+
+.search-section,
+.ngo-section,
+.ai-section,
+.registration-section{
+  padding:100px 8%;
+}
+
+.search-box{
+  max-width:700px;
+  margin:auto;
+  display:flex;
+  gap:20px;
+}
+
+.search-box input{
+  flex:1;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+}
+
+.search-box button{
+  background:#16a34a;
+  color:white;
+}
+
+.ngo-grid,
+.ai-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+
+.ngo-card,
+.ai-card{
+  background:white;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  transition:0.4s;
+}
+
+.ngo-card:hover,
+.ai-card:hover{
+  transform:translateY(-10px);
+}
+
+.ngo-image{
+  height:200px;
+  background:#2563eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:70px;
+  color:white;
+}
+
+.green{
+  background:#16a34a;
+}
+
+.red{
+  background:#dc2626;
+}
+
+.ngo-content{
+  padding:30px;
+}
+
+.verified{
+  color:#16a34a;
+  font-size:14px;
+}
+
+.ngo-content p{
+  margin:20px 0;
+  line-height:1.7;
+}
+
+.ngo-tags{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.ngo-tags span{
+  background:#f3f4f6;
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:14px;
+}
+
+.ngo-footer{
+  margin-top:25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.ngo-footer button{
+  background:#16a34a;
+  color:white;
+}
+
+.ai-card{
+  padding:40px;
+}
+
+.ai-card h3{
+  margin-bottom:20px;
+}
+
+.form-container{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  padding:50px;
+  border-radius:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.input-group{
+  margin-bottom:25px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:10px;
+  font-weight:600;
+}
+
+.input-group input,
+.input-group select{
+  width:100%;
+  padding:16px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+}
+
+.submit-btn{
+  width:100%;
+  padding:18px;
+}
+
+#successPopup{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:rgba(0,0,0,0.5);
+  top:0;
+  left:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-content{
+  background:white;
+  padding:50px;
+  border-radius:25px;
+  text-align:center;
+}
+
+.popup-content button{
+  margin-top:20px;
+  padding:12px 25px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  border-radius:12px;
+}
+
+footer{
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:50px;
+}
+
+@media(max-width:992px){
+
+  .ngo-grid,
+  .ai-grid,
+  .stats-section{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:50px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .search-box{
+    flex-direction:column;
+  }
+
+}

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Your Role | PUNARDAAN</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="../auth-shared/global.css">
+  <link rel="stylesheet" href="../auth-shared/forms.css">
+  <link rel="stylesheet" href="../auth-shared/animations.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .role-selection-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 40px 20px;
+    }
+
+    .role-header {
+      text-align: center;
+      color: white;
+      margin-bottom: 60px;
+      animation: fadeInDown 0.6s ease;
+    }
+
+    .role-header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 800;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .role-header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .role-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 3px solid transparent;
+      animation: fadeInUp 0.6s ease backwards;
+    }
+
+    .role-card:nth-child(1) { animation-delay: 0.1s; }
+    .role-card:nth-child(2) { animation-delay: 0.2s; }
+    .role-card:nth-child(3) { animation-delay: 0.3s; }
+    .role-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .role-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .role-card.active {
+      border-color: #667eea;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    }
+
+    .role-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .role-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+
+    .role-card p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .role-benefits {
+      text-align: left;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .role-benefits li {
+      list-style: none;
+      padding: 8px 0;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    .role-benefits li:before {
+      content: "✓ ";
+      color: #667eea;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .role-action {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .role-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .role-btn-login {
+      background: #f0f0f0;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .role-btn-login:hover {
+      background: #667eea;
+      color: white;
+    }
+
+    .role-btn-register {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+
+    .role-btn-register:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .bottom-nav {
+      text-align: center;
+      color: white;
+      margin-top: 40px;
+    }
+
+    .bottom-nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      transition: opacity 0.3s ease;
+      font-weight: 500;
+    }
+
+    .bottom-nav a:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .role-header h1 {
+        font-size: 2rem;
+      }
+
+      .role-header p {
+        font-size: 1rem;
+      }
+
+      .role-grid {
+        gap: 20px;
+      }
+
+      .role-card {
+        padding: 30px 20px;
+      }
+
+      .role-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    body.dark-mode {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    body.dark-mode .role-card {
+      background: #2d2d44;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .role-card h3 {
+      color: #ffffff;
+    }
+
+    body.dark-mode .role-card p,
+    body.dark-mode .role-benefits li {
+      color: #b0b0b0;
+    }
+
+    body.dark-mode .role-header h1,
+    body.dark-mode .role-header p {
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="auth-navbar" style="position: absolute; top: 0; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+    <a href="../index.html" class="auth-logo">
+      <img src="../punardan.png" alt="Punardaan Logo">
+      <span style="color: white;">PUNARDAAN</span>
+    </a>
+    <div class="auth-navbar-right">
+      <button id="themeToggle" class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <div class="role-selection-container">
+    <div class="role-header">
+      <h1>Choose Your Role</h1>
+      <p>Join our mission to redistribute humanitarian aid. Select how you want to make a difference.</p>
+    </div>
+
+    <div class="role-grid">
+      <!-- DONOR CARD -->
+      <div class="role-card" onclick="selectRole('donor')">
+        <div class="role-icon">🎁</div>
+        <h3>Donor</h3>
+        <p>Give what you have, help those in need</p>
+        <ul class="role-benefits">
+          <li>Donate items & money</li>
+          <li>Track your impact</li>
+          <li>Get matched requests</li>
+          <li>Join a community</li>
+        </ul>
+        <div class="role-action">
+          <button class="role-btn role-btn-login" onclick="goToLogin('donor'); event.stopPropagation();">Login</button>
+          <button class="role-btn role-btn-register" onclick="goToRegister('donor'); event.stopPropagation();">Register</button>
+        </div>
+      </div>
+
+      <!-- NGO CARD -->
+      <div class="role-card" onclick="selectRole('ngo')">
+        <div class="role-icon">🏢</div>
+        <h3>NGO</h3>
+        <p>Partner with us to maximize your impact</p>
+        <ul class="role-benefits">
+          <li>Post requests</li>
+          <li>Connect with donors</li>
+          <li>Manage campaigns</li>
+          <li>Analytics & insights</li>
+        </ul>
+        <div class="role-action">
+          <button class="role-btn role-btn-login" onclick="goToLogin('ngo'); event.stopPropagation();">Login</button>
+          <button class="role-btn role-btn-register" onclick="goToRegister('ngo'); event.stopPropagation();">Register</button>
+        </div>
+      </div>
+
+      <!-- VOLUNTEER CARD -->
+      <div class="role-card" onclick="selectRole('volunteer')">
+        <div class="role-icon">👥</div>
+        <h3>Volunteer</h3>
+        <p>Share your time and skills</p>
+        <ul class="role-benefits">
+          <li>Find opportunities</li>
+          <li>Build experience</li>
+          <li>Connect locally</li>
+          <li>Track hours</li>
+        </ul>
+        <div class="role-action">
+          <button class="role-btn role-btn-login" onclick="goToLogin('volunteer'); event.stopPropagation();">Login</button>
+          <button class="role-btn role-btn-register" onclick="goToRegister('volunteer'); event.stopPropagation();">Register</button>
+        </div>
+      </div>
+
+      <!-- STUDENT CARD -->
+      <div class="role-card" onclick="selectRole('student')">
+        <div class="role-icon">📚</div>
+        <h3>Student</h3>
+        <p>Access educational support & scholarships</p>
+        <ul class="role-benefits">
+          <li>Request scholarships</li>
+          <li>Get mentorship</li>
+          <li>Study materials</li>
+          <li>Community support</li>
+        </ul>
+        <div class="role-action">
+          <button class="role-btn role-btn-login" onclick="goToLogin('student'); event.stopPropagation();">Login</button>
+          <button class="role-btn role-btn-register" onclick="goToRegister('student'); event.stopPropagation();">Register</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <a href="../index.html">← Back to Home</a>
+      <span>•</span>
+      <a href="login.html">Direct Login</a>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+
+    // Load theme preference
+    window.addEventListener('load', function() {
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+
+    function selectRole(role) {
+      localStorage.setItem('selectedRole', role);
+      document.querySelectorAll('.role-card').forEach(card => card.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function goToLogin(role) {
+      localStorage.setItem('selectedRole', role);
+      window.location.href = 'login.html?role=' + role;
+    }
+
+    function goToRegister(role) {
+      localStorage.setItem('selectedRole', role);
+      window.location.href = 'register.html?role=' + role;
+    }
+  </script>
+
+</body>
+</html>

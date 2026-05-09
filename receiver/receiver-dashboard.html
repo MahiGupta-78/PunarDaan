@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receiver Dashboard - Punardaan</title>
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="../auth-shared/global.css">
+  <link rel="stylesheet" href="../auth-shared/animations.css">
+  <link rel="stylesheet" href="../auth-shared/forms.css">
+
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="../donor/donor-dashboard.css">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" style="background: linear-gradient(180deg, rgba(139, 92, 246, 0.95) 0%, rgba(109, 40, 217, 0.95) 100%);">
+  <div class="sidebar-header">
+    <img src="../punardan.png" alt="Logo" class="sidebar-logo">
+    <h2>Punardaan Needs</h2>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-page="dashboard">
+      <i class="fas fa-home"></i>
+      <span>Overview</span>
+    </a>
+    <a href="#" class="nav-item" data-page="requests">
+      <i class="fas fa-hand-holding-heart"></i>
+      <span>My Requests</span>
+      <span class="badge" style="background: rgba(255,255,255,0.3)">1 Active</span>
+    </a>
+    <a href="#" class="nav-item" data-page="resources">
+      <i class="fas fa-search-location"></i>
+      <span>Find Resources</span>
+    </a>
+    <a href="#" class="nav-item" data-page="messages">
+      <i class="fas fa-comment-dots"></i>
+      <span>Messages</span>
+    </a>
+    <a href="#" class="nav-item" data-page="settings">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+    <a href="#" class="nav-item" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+  </nav>
+
+  <button id="darkModeToggle" class="dark-mode-btn">
+    <i class="fas fa-moon"></i>
+  </button>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+  <header class="dashboard-header">
+    <div class="header-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search for nearby help...">
+    </div>
+    <div class="header-right">
+      <button class="notification-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">2</span>
+      </button>
+      <div class="user-menu">
+        <img src="https://via.placeholder.com/40" alt="Receiver" class="user-avatar" style="border-color: #8b5cf6;">
+      </div>
+    </div>
+  </header>
+
+  <div class="pages-container">
+    <!-- DASHBOARD -->
+    <div class="page-content active" data-page="dashboard">
+      <section class="welcome-section">
+        <div class="welcome-card" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+          <h1>Welcome, <span id="userName">User</span>! 🤝</h1>
+          <p>We're here to help. Track your requests and discover local support below.</p>
+          <button class="btn btn-primary" onclick="switchPage('requests')" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);">
+            <i class="fas fa-plus"></i> New Request
+          </button>
+        </div>
+      </section>
+
+      <!-- Active Status Grid -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple">📦</div>
+          <div class="stat-content">
+            <h3>Active Requests</h3>
+            <p class="stat-value">1</p>
+            <span class="stat-change">Food Request</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-content">
+            <h3>Matched Needs</h3>
+            <p class="stat-value">100%</p>
+            <span class="stat-change">Match Found!</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">🚚</div>
+          <div class="stat-content">
+            <h3>Delivery Status</h3>
+            <p class="stat-value">En Route</p>
+            <span class="stat-change">Arriving in 15 mins</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Matches -->
+      <section class="ai-section">
+        <h2><i class="fas fa-magic"></i> Help is on the way</h2>
+        <div class="recommendations-grid">
+          <div class="recommendation-card" style="border-left: 4px solid var(--green);">
+            <div class="rec-icon">🍲</div>
+            <h3>Your Food Request Matched</h3>
+            <p>Donor <strong>Om Shree Dhaba</strong> accepted your request. A volunteer has picked up the food.</p>
+            <button class="btn btn-primary-sm" style="background: var(--green);">Track Volunteer</button>
+          </div>
+          <div class="recommendation-card">
+            <div class="rec-icon">🩺</div>
+            <h3>Free Medical Camp</h3>
+            <p>Based on your profile, a free health checkup camp is happening 2km away tomorrow.</p>
+            <button class="btn btn-primary-sm">Register</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REQUESTS PAGE -->
+    <div class="page-content" data-page="requests">
+      <div class="page-header">
+        <h1>My Help Requests</h1>
+        <button class="btn btn-primary" style="background: var(--purple);"><i class="fas fa-plus"></i> Submit New Request</button>
+      </div>
+      <div class="requests-list">
+        <div class="request-card">
+          <div class="request-header">
+            <h3>Food for Family</h3>
+            <span class="priority urgent" style="background: rgba(16, 185, 129, 0.2); color: var(--green);">Matched</span>
+          </div>
+          <p>Request for cooked food for 4 people.</p>
+          <div class="request-details">
+            <span><i class="fas fa-calendar"></i> Requested today</span>
+            <span><i class="fas fa-truck"></i> Volunteer assigned</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="toastContainer" class="toast-container"></div>
+<script src="../auth-shared/utils.js"></script>
+<script src="receiver-dashboard.js"></script>
+</body>
+</html>

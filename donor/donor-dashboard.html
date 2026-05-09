@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donor Dashboard | PUNARDAAN</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../css/global-styles.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+  
+  <style>
+    body { display: flex; min-height: 100vh; background: var(--bg-main); overflow-x: hidden; }
+    
+    .sidebar { 
+      width: 280px; 
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark)); 
+      color: white; 
+      padding: 30px 20px; 
+      display: flex; 
+      flex-direction: column; 
+      position: fixed; 
+      height: 100vh; 
+      z-index: 1000; 
+      transition: var(--transition);
+    }
+
+    .main-content { 
+      margin-left: 280px; 
+      flex: 1; 
+      padding: 40px; 
+      width: calc(100% - 280px);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-item { 
+      padding: 14px 20px; 
+      border-radius: 12px; 
+      margin-bottom: 8px; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      transition: var(--transition); 
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      font-weight: 500; 
+    }
+
+    .nav-item:hover, .nav-item.active { background: rgba(255, 255, 255, 0.2); color: white; transform: translateX(5px); }
+    
+    .dashboard-section { display: none; }
+    .dashboard-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+    .map-container { height: 500px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 30px; box-shadow: var(--shadow-lg); }
+
+    .ngo-card { 
+      background: var(--bg-card); 
+      border-radius: 20px; 
+      overflow: hidden; 
+      border: 1px solid var(--border-color); 
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .ngo-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .ngo-img { width: 100%; height: 180px; object-fit: cover; }
+    .ngo-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+
+    @media (max-width: 992px) {
+      .sidebar { width: 80px; padding: 30px 10px; }
+      .sidebar span, .logo h2 { display: none; }
+      .main-content { margin-left: 80px; width: calc(100% - 80px); padding: 20px; }
+    }
+  </style>
+</head>
+<body class="light-mode">
+  
+  <div id="pageLoader" class="page-loader"><div class="loader-spinner"></div></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo mb-5" style="display: flex; align-items: center; gap: 10px; padding: 0 10px;">
+      <img src="../punardan.png" style="width: 40px; border-radius: 50%; background: white;">
+      <h2 style="font-weight: 800; letter-spacing: -1px;">PUNARDAAN</h2>
+    </div>
+
+    <nav style="flex: 1;">
+      <a href="#" class="nav-item active" onclick="showSection('overview')"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a>
+      <a href="#" class="nav-item" onclick="showSection('donations')"><i class="fas fa-hand-holding-heart"></i> <span>Donations</span></a>
+      <a href="#" class="nav-item" onclick="showSection('nearby')"><i class="fas fa-map-marker-alt"></i> <span>NGOs Nearby</span></a>
+      <a href="#" class="nav-item" onclick="window.location.href='../impact/impact.html'"><i class="fas fa-medal"></i> <span>Impact</span></a>
+      <a href="#" class="nav-item" onclick="showSection('profile')"><i class="fas fa-user-circle"></i> <span>Profile</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" style="width: 100%; border: none; background: none; text-align: left;">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+      <h2 id="sectionTitle">Overview</h2>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <button id="darkModeBtn" class="btn btn-outline btn-sm"><i id="themeIcon" class="fas fa-moon"></i></button>
+        <button id="languageBtn" class="btn btn-outline btn-sm"><i class="fas fa-globe"></i> EN</button>
+        <div class="profile-mini glass" style="padding: 5px 15px; border-radius: 12px; display: flex; align-items: center; gap: 10px;">
+          <img src="https://i.pravatar.cc/40?u=donor" style="width: 35px; border-radius: 50%;">
+          <span id="userName" style="font-weight: 600;">Donor Portal</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTIONS -->
+    <div id="overview" class="dashboard-section active">
+      <div class="welcome-banner glass mb-5" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px; border-radius: 24px;">
+        <h1>Welcome Back! 👋</h1>
+        <p>You have donated to 5 NGOs this month. Your impact score increased by 15%.</p>
+        <button class="btn btn-primary mt-4" style="background: white; color: var(--primary);" onclick="showSection('nearby')">Find NGOs Near You</button>
+      </div>
+      <div class="stats-grid mb-5">
+        <div class="stat-card"><h3>1,240</h3><p>Points Earned</p></div>
+        <div class="stat-card"><h3>12</h3><p>Lives Impacted</p></div>
+        <div class="stat-card"><h3>Gold</h3><p>Donor Level</p></div>
+      </div>
+    </div>
+
+    <div id="nearby" class="dashboard-section">
+      <div class="map-container" id="ngoMap"></div>
+      <div class="flex-between mb-4">
+        <h3>Verified NGOs in Dehradun & Haridwar</h3>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" placeholder="Search NGO..." class="glass" style="padding: 10px 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+          <button class="btn btn-primary">Search</button>
+        </div>
+      </div>
+      <div id="ngoGrid" class="cards-grid"></div>
+    </div>
+
+    <div id="donations" class="dashboard-section">
+      <h3 class="mb-4">Recent Donations</h3>
+      <div class="impact-card">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="text-align: left; border-bottom: 1px solid var(--border-color);">
+              <th style="padding: 15px;">Date</th>
+              <th style="padding: 15px;">Type</th>
+              <th style="padding: 15px;">NGO</th>
+              <th style="padding: 15px;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="donationList"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="profile" class="dashboard-section">
+      <div class="impact-card">
+        <div style="display: flex; gap: 30px; align-items: center; margin-bottom: 40px;">
+          <img src="https://i.pravatar.cc/150?u=donor" style="width: 120px; border-radius: 50%; border: 4px solid var(--primary);">
+          <div>
+            <h2 id="fullProfileName">Donor Name</h2>
+            <p style="color: var(--text-muted);">Verified Impact Maker</p>
+            <button class="btn btn-primary btn-sm mt-3">Edit Profile</button>
+          </div>
+        </div>
+        <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group"><label>Email</label><input type="text" id="profileEmail" class="glass" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);" disabled></div>
+          <div class="form-group"><label>Phone</label><input type="text" id="profilePhone" class="glass" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);" disabled></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="../data/database.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/translations.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Auth.getUser();
+      if (user) {
+        document.getElementById('userName').textContent = user.name;
+        document.getElementById('fullProfileName').textContent = user.name;
+        document.getElementById('profileEmail').value = user.email;
+        document.getElementById('profilePhone').value = user.phone || 'Not provided';
+      }
+      
+      loadDonations();
+      loadNGOs();
+    });
+
+    function showSection(id) {
+      document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('sectionTitle').textContent = id.charAt(0).toUpperCase() + id.slice(1);
+      
+      if (id === 'nearby') {
+        setTimeout(() => {
+          MapSystem.init('ngoMap');
+          MapSystem.addMarkers(PUNARDAAN_DB.ngos);
+        }, 100);
+      }
+    }
+
+    function loadNGOs() {
+      const grid = document.getElementById('ngoGrid');
+      grid.innerHTML = PUNARDAAN_DB.ngos.map(ngo => `
+        <div class="ngo-card">
+          <img src="${ngo.image}" class="ngo-img">
+          <div class="ngo-body">
+            <div class="flex-between mb-2">
+              <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--primary);">${ngo.category}</span>
+              <span style="font-weight: 700; color: #f59e0b;"><i class="fas fa-star"></i> ${ngo.rating}</span>
+            </div>
+            <h4 class="mb-2">${ngo.name}</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">${ngo.location}</p>
+            <div style="display: flex; gap: 10px; margin-top: auto;">
+              <button class="btn btn-primary btn-sm" style="flex: 1;">Donate</button>
+              <button class="btn btn-outline btn-sm" onclick="centerMap([${ngo.latitude}, ${ngo.longitude}])"><i class="fas fa-map-marker-alt"></i></button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function centerMap(coords) {
+      showSection('nearby');
+      setTimeout(() => {
+        MapSystem.instance.setView(coords, 15);
+      }, 200);
+    }
+
+    function loadDonations() {
+      const list = document.getElementById('donationList');
+      list.innerHTML = PUNARDAAN_DB.donationHistory.map(don => `
+        <tr style="border-bottom: 1px solid var(--border-color);">
+          <td style="padding: 15px;">${don.date}</td>
+          <td style="padding: 15px;"><span class="badge" style="background: #f1f5f9; color: #475569;">${don.type}</span></td>
+          <td style="padding: 15px;">${PUNARDAAN_DB.ngos.find(n => n.id === don.ngo)?.name || 'NGO'}</td>
+          <td style="padding: 15px;"><span class="badge" style="background: #ecfdf5; color: #059669;">${don.status}</span></td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

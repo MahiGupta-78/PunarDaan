@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Punardaan NGOs</title>
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="NGO.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+  <div class="logo">
+    <img 
+      src="../punardan.png" 
+      alt="Punardaan Logo"
+      class="logo-img"
+    >
+    <span>PUNARDAAN</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../donate/donate.html">Donate</a></li>
+    <li><a href="./NGO.html">NGOs</a></li>
+    <li><a href="../impact/impact.html">Impact</a></li>
+    <li><a href="../index.html">About</a></li>
+    <li><a href="../contact/contact.html">Contact</a></li>
+  </ul>
+
+  <div class="nav-buttons">
+    <button id="darkModeBtn">🌙</button>
+    <button class="login-btn" onclick="window.location.href='../auth/login.html'">Login</button>
+    <button class="register-btn" onclick="window.location.href='../auth/register.html'">Register</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <span class="badge">
+      Trusted NGO Network
+    </span>
+
+    <h1>
+      Connecting NGOs
+      <span>With Humanity</span>
+    </h1>
+
+    <p>
+      Punardaan connects NGOs, shelters, orphanages,
+      schools, and social organizations with donors
+      through AI-powered redistribution systems.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button class="primary-btn" onclick="window.location.href='../auth/register.html'">
+        Join NGO Network
+      </button>
+
+      <button class="secondary-btn" onclick="window.location.href='../index.html'">
+        Explore NGOs
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- STATS -->
+
+<section class="stats-section">
+
+  <div class="stat-box">
+
+    <h1 class="counter" data-target="1200">0</h1>
+
+    <p>Registered NGOs</p>
+
+  </div>
+
+  <div class="stat-box">
+
+    <h1 class="counter" data-target="45000">0</h1>
+
+    <p>Meals Distributed</p>
+
+  </div>
+
+  <div class="stat-box">
+
+    <h1 class="counter" data-target="8500">0</h1>
+
+    <p>Students Helped</p>
+
+  </div>
+
+  <div class="stat-box">
+
+    <h1 class="counter" data-target="3000">0</h1>
+
+    <p>Volunteers Active</p>
+
+  </div>
+
+</section>
+
+<!-- NGO SEARCH -->
+
+<section class="search-section">
+
+  <h2 class="section-title">
+    Find NGOs Near You
+  </h2>
+
+  <div class="search-box">
+
+    <input type="text" id="ngoSearch" placeholder="Search NGO by name or city">
+
+    <button onclick="window.location.href='../NGO/NGO.html'">
+      Search
+    </button>
+
+  </div>
+
+</section>
+
+<!-- NGO CARDS -->
+
+<section class="ngo-section">
+
+  <h2 class="section-title">
+    Verified NGO Partners
+  </h2>
+
+  <div class="ngo-grid">
+
+    <!-- CARD -->
+
+    <div class="ngo-card">
+
+      <div class="ngo-image">
+        🏠
+      </div>
+
+      <div class="ngo-content">
+
+        <h3>Hope Foundation</h3>
+
+        <span class="verified">
+          ✔ Verified NGO
+        </span>
+
+        <p>
+          Supporting homeless people and orphan children
+          through food and clothing redistribution.
+        </p>
+
+        <div class="ngo-tags">
+
+          <span>Food</span>
+          <span>Clothes</span>
+          <span>Education</span>
+
+        </div>
+
+        <div class="ngo-footer">
+
+          <span>📍 Delhi</span>
+
+          <button onclick="window.location.href='../donate/donate.html'">
+            View NGO
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="ngo-card">
+
+      <div class="ngo-image green">
+        📚
+      </div>
+
+      <div class="ngo-content">
+
+        <h3>Education First</h3>
+
+        <span class="verified">
+          ✔ Verified NGO
+        </span>
+
+        <p>
+          Helping underprivileged students through
+          books, scholarships, and digital learning.
+        </p>
+
+        <div class="ngo-tags">
+
+          <span>Books</span>
+          <span>Students</span>
+          <span>NGO</span>
+
+        </div>
+
+        <div class="ngo-footer">
+
+          <span>📍 Mumbai</span>
+
+          <button onclick="window.location.href='../donate/donate.html'">
+            View NGO
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD -->
+
+    <div class="ngo-card">
+
+      <div class="ngo-image red">
+        🩸
+      </div>
+
+      <div class="ngo-content">
+
+        <h3>Life Blood Care</h3>
+
+        <span class="verified">
+          ✔ Verified NGO
+        </span>
+
+        <p>
+          Emergency blood support network connecting
+          hospitals and blood donors.
+        </p>
+
+        <div class="ngo-tags">
+
+          <span>Blood</span>
+          <span>Emergency</span>
+          <span>Hospitals</span>
+
+        </div>
+
+        <div class="ngo-footer">
+
+          <span>📍 Bangalore</span>
+
+          <button onclick="window.location.href='../donate/donate.html'">
+            View NGO
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- AI FEATURES -->
+
+<section class="ai-section">
+
+  <h2 class="section-title">
+    AI Smart NGO Matching
+  </h2>
+
+  <div class="ai-grid">
+
+    <div class="ai-card">
+
+      <h3>Nearest NGO Detection</h3>
+
+      <p>
+        AI automatically finds nearby NGOs
+        for faster redistribution.
+      </p>
+
+    </div>
+
+    <div class="ai-card">
+
+      <h3>Demand Prediction</h3>
+
+      <p>
+        Predicts areas with high demand
+        for food, clothes, and books.
+      </p>
+
+    </div>
+
+    <div class="ai-card">
+
+      <h3>Emergency Prioritization</h3>
+
+      <p>
+        Urgent requests are prioritized
+        automatically using AI scoring.
+      </p>
+
+    </div>
+
+    <div class="ai-card">
+
+      <h3>Fraud Detection</h3>
+
+      <p>
+        AI helps identify fake requests
+        and suspicious activities.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- NGO REGISTRATION -->
+
+<section class="registration-section">
+
+  <div class="form-container">
+
+    <h2>
+      Register Your NGO
+    </h2>
+
+    <form id="ngoForm">
+
+      <div class="input-group">
+
+        <label>NGO Name</label>
+
+        <input type="text" required>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>Registration Number</label>
+
+        <input type="text" required>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>NGO Type</label>
+
+        <select>
+
+          <option>Food Support</option>
+
+          <option>Blood Support</option>
+
+          <option>Education</option>
+
+          <option>Clothes Distribution</option>
+
+        </select>
+
+      </div>
+
+      <div class="input-group">
+
+        <label>City</label>
+
+        <input type="text">
+
+      </div>
+
+      <div class="input-group">
+
+        <label>Contact Email</label>
+
+        <input type="email">
+
+      </div>
+
+      <div class="input-group">
+
+        <label>Upload NGO Certificate</label>
+
+        <input type="file">
+
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Submit NGO Registration
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- SUCCESS POPUP -->
+
+<div id="successPopup">
+
+  <div class="popup-content">
+
+    <h2>
+      🎉 NGO Registration Submitted
+    </h2>
+
+    <p>
+      Your NGO verification request has been sent.
+    </p>
+
+    <button id="closePopup">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <h2>
+    🌍 PUNARDAAN
+  </h2>
+
+  <p>
+    Don’t Waste. Redistribute. Transform Lives.
+  </p>
+
+</footer>
+
+<script src="ngo.js"></script>
+
+</body>
+</html>

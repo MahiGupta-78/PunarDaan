@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Punardaan</title>
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="../auth-shared/global.css">
+  <link rel="stylesheet" href="../auth-shared/animations.css">
+  <link rel="stylesheet" href="../auth-shared/forms.css">
+
+  <!-- Dashboard CSS (Reusing Donor Dashboard CSS for consistent Glassmorphism look) -->
+  <link rel="stylesheet" href="../donor/donor-dashboard.css">
+  <link rel="stylesheet" href="admin-dashboard.css">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <!-- Chart.js for ML Predictions -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" style="background: linear-gradient(180deg, rgba(30, 58, 138, 0.95) 0%, rgba(29, 78, 216, 0.95) 100%);">
+  <div class="sidebar-header">
+    <img src="../punardan.png" alt="Logo" class="sidebar-logo">
+    <h2>Punardaan Admin</h2>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-page="dashboard">
+      <i class="fas fa-chart-line"></i>
+      <span>Overview</span>
+    </a>
+    <a href="#" class="nav-item" data-page="ngos">
+      <i class="fas fa-building"></i>
+      <span>NGOs Verification</span>
+      <span class="badge" style="background: rgba(255,255,255,0.3)">15</span>
+    </a>
+    <a href="#" class="nav-item" data-page="users">
+      <i class="fas fa-users"></i>
+      <span>User Management</span>
+    </a>
+    <a href="#" class="nav-item" data-page="ai-insights">
+      <i class="fas fa-brain"></i>
+      <span>AI Insights</span>
+    </a>
+    <a href="#" class="nav-item" data-page="settings">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+    <a href="#" class="nav-item" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+  </nav>
+
+  <button id="darkModeToggle" class="dark-mode-btn">
+    <i class="fas fa-moon"></i>
+  </button>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+  <header class="dashboard-header">
+    <div class="header-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search across platform...">
+    </div>
+    <div class="header-right">
+      <button class="notification-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">9</span>
+      </button>
+      <div class="user-menu">
+        <img src="https://via.placeholder.com/40" alt="Admin" class="user-avatar" style="border-color: #1e3a8a;">
+      </div>
+    </div>
+  </header>
+
+  <div class="pages-container">
+    <!-- DASHBOARD -->
+    <div class="page-content active" data-page="dashboard">
+      <section class="welcome-section">
+        <div class="welcome-card" style="background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);">
+          <h1>Welcome, <span id="userName">System Administrator</span> 👑</h1>
+          <p>The platform is running optimally. View global metrics below.</p>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon orange">👥</div>
+          <div class="stat-content">
+            <h3>Total Users</h3>
+            <p class="stat-value">15,402</p>
+            <span class="stat-change">+12% this month</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">🎁</div>
+          <div class="stat-content">
+            <h3>Total Donations</h3>
+            <p class="stat-value">124K</p>
+            <span class="stat-change">Platform Lifetime</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">🏢</div>
+          <div class="stat-content">
+            <h3>Verified NGOs</h3>
+            <p class="stat-value">342</p>
+            <span class="stat-change">15 Pending</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">🧠</div>
+          <div class="stat-content">
+            <h3>AI Matches</h3>
+            <p class="stat-value">84,000</p>
+            <span class="stat-change">96% Success Rate</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Live Map -->
+      <section class="ai-section">
+        <h2><i class="fas fa-map-marked-alt"></i> Global Live Operations Map</h2>
+        <div class="map-container" style="margin-top: 20px;">
+          <div id="map" style="height: 400px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- NGOs VERIFICATION PAGE -->
+    <div class="page-content" data-page="ngos">
+      <div class="page-header">
+        <h1>NGO Verification Queue</h1>
+      </div>
+      <div class="requests-list" id="ngoQueue">
+        <div class="request-card">
+          <div class="request-header">
+            <h3>Hope Foundation</h3>
+            <span class="priority urgent">Awaiting Docs</span>
+          </div>
+          <p>Registration No: NGO-IN-10023</p>
+          <div class="request-details">
+            <span><i class="fas fa-map-pin"></i> Delhi, IN</span>
+            <span><i class="fas fa-calendar"></i> Applied 2 days ago</span>
+          </div>
+          <button class="btn btn-primary-sm" style="margin-top: 10px;">Review application</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS PAGE -->
+    <div class="page-content" data-page="users">
+      <div class="page-header">
+        <h1>User Management</h1>
+      </div>
+      <div class="welcome-card" style="background: var(--bg-secondary); color: var(--text);">
+        <p>Full user table and RBAC controls will be injected here by React/Vue in production.</p>
+      </div>
+    </div>
+
+    <!-- AI INSIGHTS PAGE -->
+    <div class="page-content" data-page="ai-insights">
+      <div class="page-header">
+        <h1>AI Logistics & Predictive Modeling</h1>
+      </div>
+      <div class="welcome-card" style="background: var(--bg-secondary); border: 1px solid var(--border); margin-bottom: 24px; padding: 20px;">
+        <h3 style="color: var(--text); margin-bottom: 16px;">Demand Forecast (Next 7 Days)</h3>
+        <div style="height: 300px; width: 100%;">
+          <canvas id="demandForecastChart"></canvas>
+        </div>
+      </div>
+      <div class="recommendations-grid">
+        <div class="recommendation-card">
+          <div class="rec-icon">⚠️</div>
+          <h3>Upcoming Food Deficit</h3>
+          <p>Predictive model shows a 25% drop in food donations in the Mumbai region over the next 48 hours.</p>
+          <button class="btn btn-primary-sm">Trigger Alert to Donors</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="toastContainer" class="toast-container"></div>
+<script src="../auth-shared/utils.js"></script>
+<script src="../ml/ml-predictions.js"></script>
+<script src="admin-dashboard.js"></script>
+</body>
+</html>

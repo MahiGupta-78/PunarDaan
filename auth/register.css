@@ -1,0 +1,456 @@
+/* ================= REGISTER PAGE STYLES ================= */
+
+.register-step {
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.register-step.active {
+  display: block;
+}
+
+/* ================= STEP HEADER ================= */
+
+.step-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-btn:hover {
+  transform: translateX(-5px);
+}
+
+.step-header h1 {
+  color: var(--text-primary);
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.step-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ================= FORM PROGRESS ================= */
+
+.form-progress {
+  display: flex;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.progress-step {
+  height: 4px;
+  flex: 1;
+  background: var(--border-color);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.progress-step.active {
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.progress-step.completed {
+  background: var(--success-color);
+}
+
+/* ================= ROLE GRID ================= */
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.role-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3));
+  transition: left 0.5s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color);
+  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.2);
+}
+
+.role-card:hover::before {
+  left: 100%;
+}
+
+.role-card.selected {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(53, 211, 153, 0.1));
+  border-color: var(--primary-color);
+  box-shadow: 0 0 30px rgba(22, 163, 74, 0.3);
+}
+
+.role-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+.role-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.role-card h3 {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.role-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.role-badge {
+  display: inline-block;
+  background: rgba(22, 163, 74, 0.2);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ================= REGISTRATION FORM ================= */
+
+.registration-form {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+}
+
+.form-section h2 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-section h2 i {
+  color: var(--primary-color);
+}
+
+/* ================= CHECKBOX GROUP ================= */
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: var(--light-bg);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1.5px solid var(--border-color);
+}
+
+.checkbox-item:hover {
+  background: rgba(22, 163, 74, 0.05);
+  border-color: var(--primary-color);
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ================= SELECT WITH ICON ================= */
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  gap: 10px;
+}
+
+.select-wrapper.full {
+  display: block;
+}
+
+.icon-select {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.icon-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.icon-option:hover {
+  border-color: var(--primary-color);
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.icon-option input[type="radio"] {
+  display: none;
+}
+
+.icon-option input[type="radio"]:checked ~ .option-content {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.icon-option input[type="radio"]:checked ~ .option-icon {
+  font-size: 2.5rem;
+}
+
+.icon-option.selected {
+  border-color: var(--primary-color);
+  background: rgba(22, 163, 74, 0.1);
+}
+
+.option-icon {
+  font-size: 2rem;
+  margin-bottom: 5px;
+  transition: var(--transition);
+}
+
+.option-content {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+/* ================= PROFILE IMAGE UPLOAD ================= */
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  background: rgba(22, 163, 74, 0.02);
+}
+
+.image-upload:hover {
+  border-color: var(--primary-color);
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.image-upload i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.image-upload p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.image-upload span {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.image-upload input[type="file"] {
+  display: none;
+}
+
+.image-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 15px;
+  border: 2px solid var(--border-color);
+}
+
+/* ================= LOGIN LINK ================= */
+
+.login-link {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 25px;
+}
+
+.login-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode .role-card {
+  background: var(--dark-card-bg);
+  border-color: #374151;
+}
+
+body.dark-mode .role-card.selected {
+  background: linear-gradient(135deg, rgba(22, 163, 74, 0.15), rgba(53, 211, 153, 0.1));
+  border-color: #16a34a;
+}
+
+body.dark-mode .step-header h1 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .step-header p {
+  color: #cbd5e1;
+}
+
+body.dark-mode .form-section {
+  border-bottom-color: #374151;
+}
+
+body.dark-mode .form-section h2 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .checkbox-item {
+  background: #1e293b;
+  border-color: #374151;
+}
+
+body.dark-mode .checkbox-item:hover {
+  background: rgba(22, 163, 74, 0.1);
+}
+
+body.dark-mode .icon-option {
+  border-color: #374151;
+}
+
+body.dark-mode .icon-option:hover {
+  background: rgba(22, 163, 74, 0.1);
+}
+
+body.dark-mode .image-upload {
+  background: rgba(22, 163, 74, 0.05);
+  border-color: #374151;
+}
+
+body.dark-mode .image-upload:hover {
+  background: rgba(22, 163, 74, 0.1);
+  border-color: #16a34a;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role-card {
+    padding: 20px;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .icon-select {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+
+  .option-icon {
+    font-size: 1.5rem;
+  }
+
+  .option-content {
+    font-size: 0.7rem;
+  }
+}

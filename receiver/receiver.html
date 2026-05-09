@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Receiver Portal | Punardaan</title>
+
+  <link rel="stylesheet" href="receiver.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      <img src="../punardan.png" alt="">
+      <span>PUNARDAAN</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./receiver.html">Request Help</a></li>
+      <li><a href="../NGO/NGO.html">NGOs</a></li>
+      <li><a href="../contact/contact.html">Emergency</a></li>
+      <li><a href="../contact/contact.html">Support</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <section class="receiver-hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+      <h1>Need Help? We Are Here.</h1>
+
+      <p>
+        Request food, blood, books, clothes, or shelter support
+        with just a few clicks.
+      </p>
+
+      <button class="hero-btn" onclick="document.getElementById('receiverForm').scrollIntoView({behavior: 'smooth'})">
+        Request Support
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- QUICK HELP -->
+
+  <section class="quick-help">
+
+    <h2 class="section-title">What Do You Need?</h2>
+
+    <div class="help-grid">
+
+      <div class="help-card food">
+        <div class="icon">🍲</div>
+        <h3>Food</h3>
+        <p>Fresh meals and emergency food support</p>
+      </div>
+
+      <div class="help-card blood">
+        <div class="icon">🩸</div>
+        <h3>Blood</h3>
+        <p>Emergency blood donor assistance</p>
+      </div>
+
+      <div class="help-card books">
+        <div class="icon">📚</div>
+        <h3>Books</h3>
+        <p>Educational books and school support</p>
+      </div>
+
+      <div class="help-card clothes">
+        <div class="icon">👕</div>
+        <h3>Clothes</h3>
+        <p>New and reusable clothing support</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- REQUEST FORM -->
+
+  <section class="request-section">
+
+    <div class="request-left">
+
+      <h2>Request Assistance</h2>
+
+      <p>
+        Fill the details below. Our AI system will connect
+        you with nearby NGOs and donors instantly.
+      </p>
+
+      <div class="ai-box">
+        🤖 AI Smart Matching Enabled
+      </div>
+
+      <div class="info-card">
+        ⚡ Emergency requests are prioritized
+      </div>
+
+      <div class="info-card">
+        📍 Nearby NGO auto-matching
+      </div>
+
+      <div class="info-card">
+        🌍 Multilingual support available
+      </div>
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="request-right">
+
+      <form id="receiverForm">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="input-group">
+          <label>Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter phone number" required>
+        </div>
+
+        <div class="input-group">
+          <label>City</label>
+          <input type="text" id="city" placeholder="Enter city" required>
+        </div>
+
+        <div class="input-group">
+          <label>Address</label>
+          <textarea id="address" placeholder="Enter full address"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>What Do You Need?</label>
+
+          <select id="helpType">
+
+            <option value="">Select Support</option>
+
+            <option>Food</option>
+            <option>Blood</option>
+            <option>Books</option>
+            <option>Clothes</option>
+            <option>Shelter Support</option>
+
+          </select>
+        </div>
+
+        <div class="input-group">
+
+          <label>Urgency Level</label>
+
+          <select id="urgency">
+
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Emergency</option>
+
+          </select>
+
+        </div>
+
+        <div class="input-group">
+          <label>Family Members Count</label>
+          <input type="number" id="family" placeholder="How many people need support?">
+        </div>
+
+        <div class="input-group">
+          <label>Upload Supporting Image</label>
+          <input type="file" id="imageUpload">
+        </div>
+
+        <div class="image-preview">
+          <img id="preview" src="" alt="">
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Submit Request
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- LIVE STATUS -->
+
+  <section class="status-section">
+
+    <h2 class="section-title">Live Help Activity</h2>
+
+    <div class="status-grid">
+
+      <div class="status-card">
+        🍲 Food Request Accepted
+      </div>
+
+      <div class="status-card">
+        🩸 Blood Donor Found Nearby
+      </div>
+
+      <div class="status-card">
+        📚 Books Delivery In Progress
+      </div>
+
+      <div class="status-card">
+        👕 Clothes Pickup Scheduled
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+
+  <section class="cta-section">
+
+    <h1>You Are Not Alone.</h1>
+
+    <p>
+      Punardaan connects humanity through kindness and technology.
+    </p>
+
+    <button onclick="window.location.href='../NGO/NGO.html'">
+      Find Nearby NGOs
+    </button>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-logo">
+      🌍 PUNARDAAN
+    </div>
+
+    <p>
+      Don’t Waste. Redistribute. Transform Lives.
+    </p>
+
+  </footer>
+
+  <script src="receiver.js"></script>
+
+</body>
+
+</html>

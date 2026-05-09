@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUNARDAAN - Receiver Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="receiver-dashboard.css">
+    <link rel="stylesheet" href="../enhanced-styles.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+        <h3>Loading your dashboard...</h3>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/punardaan-logo.png" alt="PUNARDAAN" class="logo">
+            <h2>PUNARDAAN</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-page="dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav-item" data-page="requests">
+                <i class="fas fa-hand-holding-heart"></i>
+                <span>My Requests</span>
+            </button>
+            <button class="nav-item" data-page="donations">
+                <i class="fas fa-gift"></i>
+                <span>Available Donations</span>
+            </button>
+            <button class="nav-item" data-page="map">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Nearby Resources</span>
+            </button>
+            <button class="nav-item" data-page="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+            <button class="nav-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="nav-item" id="languageToggle">
+                <i class="fas fa-language"></i>
+                <span id="langText">EN</span>
+            </button>
+            <button class="nav-item" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="nav-item" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="breadcrumb">Home / Dashboard</div>
+            </div>
+
+            <div class="header-center">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search resources, donations..." id="searchInput">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+
+                <div class="profile-mini">
+                    <img src="../images/default-avatar.png" alt="Profile" id="profileAvatar">
+                    <div class="profile-info">
+                        <strong id="userName">John Doe</strong>
+                        <small id="userRole">Receiver</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Pages Container -->
+        <div class="pages-container">
+            <!-- Dashboard Page -->
+            <div class="page active" id="dashboardPage">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <h1 id="welcomeTitle">Welcome back, John!</h1>
+                        <p id="welcomeDesc">Find the resources you need and connect with donors in your community.</p>
+                    </div>
+                    <div class="welcome-stats">
+                        <div class="quick-stat">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <span id="activeRequests">5</span>
+                            <small id="activeRequestsText">Active Requests</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="ai-recommendations-section">
+                    <h2><i class="fas fa-robot"></i> <span id="aiRecTitle">AI Recommendations</span></h2>
+                    <div class="ai-recommendations-grid" id="aiRecommendationsGrid">
+                        <!-- AI recommendations will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon orange">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div>
+                            <h4 id="totalRequestsText">Total Requests</h4>
+                            <h2 class="counter" data-target="24">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="icon blue">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h4 id="fulfilledRequestsText">Fulfilled</h4>
+                            <h2 class="counter" data-target="18">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="icon green">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 id="pendingRequestsText">Pending</h4>
+                            <h2 class="counter" data-target="6">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="icon purple">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h4 id="connectedDonorsText">Connected Donors</h4>
+                            <h2 class="counter" data-target="12">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3 id="quickActionsTitle">Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="newRequestBtn">
+                            <i class="fas fa-plus"></i> <span id="newRequestText">New Request</span>
+                        </button>
+                        <button class="btn btn-secondary" id="browseDonationsBtn">
+                            <i class="fas fa-search"></i> <span id="browseDonationsText">Browse Donations</span>
+                        </button>
+                        <button class="btn btn-outline" id="findNearbyBtn">
+                            <i class="fas fa-map-marker-alt"></i> <span id="findNearbyText">Find Nearby</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section">
+                    <h2><i class="fas fa-history"></i> <span id="recentActivityTitle">Recent Activity</span></h2>
+                    <div class="activity-list" id="recentActivityList">
+                        <!-- Activity items will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requests Page -->
+            <div class="page" id="requestsPage">
+                <div class="page-header">
+                    <h1 id="myRequestsTitle">My Requests</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="createRequestBtn">
+                            <i class="fas fa-plus"></i> <span id="createRequestText">Create Request</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filters-section">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">All</button>
+                        <button class="filter-tab" data-filter="pending">Pending</button>
+                        <button class="filter-tab" data-filter="fulfilled">Fulfilled</button>
+                        <button class="filter-tab" data-filter="cancelled">Cancelled</button>
+                    </div>
+                </div>
+
+                <div class="card-grid" id="requestsGrid">
+                    <!-- Request cards will be populated here -->
+                </div>
+            </div>
+
+            <!-- Donations Page -->
+            <div class="page" id="donationsPage">
+                <div class="page-header">
+                    <h1 id="availableDonationsTitle">Available Donations</h1>
+                    <div class="page-actions">
+                        <select class="form-control" id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="food">Food</option>
+                            <option value="blood">Blood</option>
+                            <option value="books">Books</option>
+                            <option value="clothes">Clothes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-grid" id="donationsGrid">
+                    <!-- Donation cards will be populated here -->
+                </div>
+            </div>
+
+            <!-- Map Page -->
+            <div class="page" id="mapPage">
+                <div class="page-header">
+                    <h1 id="nearbyResourcesTitle">Nearby Resources</h1>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-controls">
+                        <button class="btn btn-outline" id="locateMeBtn">
+                            <i class="fas fa-crosshairs"></i> <span id="locateMeText">Locate Me</span>
+                        </button>
+                        <button class="btn btn-outline" id="filterNGOsBtn">
+                            <i class="fas fa-building"></i> <span id="filterNGOsText">NGOs</span>
+                        </button>
+                        <button class="btn btn-outline" id="filterRestaurantsBtn">
+                            <i class="fas fa-utensils"></i> <span id="filterRestaurantsText">Restaurants</span>
+                        </button>
+                    </div>
+                    <div id="map"></div>
+                    <div class="map-overlay">
+                        <div class="map-stats">
+                            <span><i class="fas fa-building"></i> <span id="ngoCount">0</span> NGOs</span>
+                            <span><i class="fas fa-utensils"></i> <span id="restaurantCount">0</span> Restaurants</span>
+                            <span><i class="fas fa-map-marker-alt"></i> <span id="distanceText">Within 10km</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profilePage">
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <img src="../images/default-avatar.png" alt="Profile" id="profileImage">
+                                <button class="edit-avatar">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            <div class="profile-info">
+                                <h2 id="profileName">John Doe</h2>
+                                <p id="profileEmail">john.doe@example.com</p>
+                                <div class="member-since" id="memberSince">Member since January 2024</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <h3 id="profileRequests">24</h3>
+                                <p id="profileRequestsText">Total Requests</p>
+                            </div>
+                            <div class="stat">
+                                <h3 id="profileFulfilled">18</h3>
+                                <p id="profileFulfilledText">Fulfilled</p>
+                            </div>
+                            <div class="stat">
+                                <h3 id="profileRating">4.8</h3>
+                                <p id="profileRatingText">Rating</p>
+                            </div>
+                        </div>
+
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" id="firstNameLabel">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" value="John">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" id="lastNameLabel">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" value="Doe">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email" id="emailLabel">Email</label>
+                                    <input type="email" class="form-control" id="email" value="john.doe@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" id="phoneLabel">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" value="+91 9876543210">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="address" id="addressLabel">Address</label>
+                                    <textarea class="form-control" id="address" rows="3">123 Main Street, City, State 12345</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="emergencyContact" id="emergencyContactLabel">Emergency Contact</label>
+                                    <input type="tel" class="form-control" id="emergencyContact" value="+91 9876543210">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="cancelProfileBtn">Cancel</button>
+                                <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="settingsPage">
+                <div class="page-header">
+                    <h1 id="settingsTitle">Settings</h1>
+                </div>
+
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <h3 id="preferencesTitle">Preferences</h3>
+
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="emailNotifications">
+                                <span class="toggle-slider"></span>
+                                <span id="emailNotificationsText">Email Notifications</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="smsNotifications">
+                                <span class="toggle-slider"></span>
+                                <span id="smsNotificationsText">SMS Notifications</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="pushNotifications" checked>
+                                <span class="toggle-slider"></span>
+                                <span id="pushNotificationsText">Push Notifications</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="languageSelect" id="languageSelectLabel">Language</label>
+                            <select class="form-control" id="languageSelect">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-danger" id="deleteAccountBtn">Delete Account</button>
+                            <button type="button" class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="../js/global-utils.js"></script>
+    <script src="../js/ai-engine.js"></script>
+    <script src="../data/database.js"></script>
+    <script src="receiver-dashboard.js"></script>
+</body>
+</html>

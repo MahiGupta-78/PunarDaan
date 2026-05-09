@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" data-title="dashboard">
+
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PUNARDAAN - Donor Dashboard</title>
+
+  <!-- Enhanced Styles -->
+  <link rel="stylesheet" href="../css/enhanced-styles.css"/>
+  <link rel="stylesheet" href="./donor-dashboard.css"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+</head>
+
+<body>
+  <!-- ================= PAGE LOADER ================= -->
+  <div id="pageLoader" class="page-loader">
+    <div class="loader-spinner"></div>
+    <h3 data-translate="loading">Loading Dashboard...</h3>
+  </div>
+
+  <!-- ================= TOAST CONTAINER ================= -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar glass">
+    <div class="sidebar-header">
+      <img src="../punardan.png" alt="Punardaan Logo" class="logo"/>
+      <h2 data-translate="dashboard">Punardaan</h2>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard" data-translate="dashboard">
+        <i class="fas fa-chart-pie"></i>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" data-page="donations" data-translate="myDonations">
+        <i class="fas fa-gift"></i>
+        <span>My Donations</span>
+      </button>
+
+      <button class="nav-item" data-page="requests" data-translate="helpRequests">
+        <i class="fas fa-hand-holding-heart"></i>
+        <span>Help Requests</span>
+      </button>
+
+      <button class="nav-item" data-page="map" data-translate="nearbyNGOs">
+        <i class="fas fa-map-location-dot"></i>
+        <span>Nearby NGOs</span>
+      </button>
+
+      <button class="nav-item" data-page="profile" data-translate="profile">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <!-- Language Toggle -->
+      <button id="languageBtn" class="btn btn-outline btn-sm" data-tooltip="Switch Language (Ctrl+L)">
+        <i class="fas fa-globe"></i> EN
+      </button>
+
+      <!-- Dark Mode Toggle -->
+      <button id="darkModeBtn" class="btn btn-outline btn-sm" data-tooltip="Toggle Theme (Ctrl+T)">
+        🌙
+      </button>
+
+      <button id="logoutBtn" class="btn btn-danger btn-sm" data-translate="logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <header class="header glass">
+      <div class="header-left">
+        <h1 id="pageTitle" data-translate="dashboard">Dashboard</h1>
+        <div class="breadcrumb">
+          <span data-translate="home">Home</span> / <span id="currentPage">Dashboard</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search requests, NGOs..." data-translate="searchRequests"/>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="notification-btn" id="notificationBtn">
+          <i class="fas fa-bell"></i>
+          <span class="badge" id="notificationBadge">4</span>
+        </button>
+
+        <div class="profile-mini">
+          <img src="https://i.pravatar.cc/100" alt="Profile"/>
+          <div class="profile-info">
+            <strong id="userName">Aman Sharma</strong>
+            <small id="userRole" data-translate="donor">Donor</small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= PAGES CONTAINER ================= -->
+    <div class="pages-container">
+      <!-- ================= DASHBOARD PAGE ================= -->
+      <section class="page active" data-page="dashboard">
+        <div class="welcome-card glass">
+          <div class="welcome-content">
+            <h1 data-translate="welcomeBack">Welcome Back, <span id="welcomeName">Aman</span> 👋</h1>
+            <p data-translate="welcomeMessage">Your generosity is changing lives every day.</p>
+          </div>
+          <div class="welcome-stats">
+            <div class="quick-stat">
+              <i class="fas fa-heart"></i>
+              <span id="todayImpact">12</span>
+              <small data-translate="todayImpact">Today's Impact</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="ai-recommendations-section">
+          <h2 data-translate="aiRecommendations">
+            <i class="fas fa-brain"></i>
+            AI Recommendations
+          </h2>
+          <div id="aiRecommendations" class="ai-recommendations-grid">
+            <!-- AI recommendations will be populated here -->
+          </div>
+          <div class="text-center mt-3">
+            <button id="refreshRecommendations" class="btn btn-primary">
+              <i class="fas fa-sync-alt"></i>
+              <span data-translate="refresh">Refresh</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card glass">
+            <div class="icon orange">🎁</div>
+            <div>
+              <h4 data-translate="totalDonations">Total Donations</h4>
+              <h2 class="counter" data-target="12">0</h2>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="icon blue">👥</div>
+            <div>
+              <h4 data-translate="livesImpacted">Lives Impacted</h4>
+              <h2 class="counter" data-target="245">0</h2>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="icon green">⭐</div>
+            <div>
+              <h4 data-translate="impactScore">Impact Score</h4>
+              <h2 id="impactScore">8.5</h2>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="icon purple">🏆</div>
+            <div>
+              <h4 data-translate="rank">Community Rank</h4>
+              <h2 id="communityRank">#127</h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h3 data-translate="quickActions">Quick Actions</h3>
+          <div class="action-buttons">
+            <button class="btn btn-primary" onclick="showModal('donateModal')">
+              <i class="fas fa-plus"></i>
+              <span data-translate="newDonation">New Donation</span>
+            </button>
+            <button class="btn btn-outline" onclick="switchPage('requests')">
+              <i class="fas fa-search"></i>
+              <span data-translate="findRequests">Find Requests</span>
+            </button>
+            <button class="btn btn-outline" onclick="switchPage('map')">
+              <i class="fas fa-map-marker-alt"></i>
+              <span data-translate="nearbyNGOs">Nearby NGOs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="section">
+          <h2 data-translate="recentActivity">Recent Activity</h2>
+          <div id="recentActivity" class="activity-list">
+            <!-- Activity items will be populated here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DONATIONS PAGE ================= -->
+      <section class="page" data-page="donations">
+        <div class="page-header">
+          <h1 data-translate="myDonations">My Donations</h1>
+          <button class="btn btn-primary" onclick="showModal('donateModal')">
+            <i class="fas fa-plus"></i>
+            <span data-translate="newDonation">New Donation</span>
+          </button>
+        </div>
+
+        <!-- Donation Filters -->
+        <div class="filters-section">
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all" data-translate="all">All</button>
+            <button class="filter-tab" data-filter="food" data-translate="food">Food</button>
+            <button class="filter-tab" data-filter="blood" data-translate="blood">Blood</button>
+            <button class="filter-tab" data-filter="books" data-translate="books">Books</button>
+            <button class="filter-tab" data-filter="clothes" data-translate="clothes">Clothes</button>
+          </div>
+        </div>
+
+        <div id="donationsGrid" class="card-grid">
+          <!-- Donation cards will be populated here -->
+        </div>
+      </section>
+
+      <!-- ================= REQUESTS PAGE ================= -->
+      <section class="page" data-page="requests">
+        <div class="page-header">
+          <h1 data-translate="helpRequests">Help Requests</h1>
+          <div class="page-actions">
+            <select id="urgencyFilter" class="form-control">
+              <option value="all" data-translate="allUrgency">All Urgency</option>
+              <option value="critical" data-translate="critical">Critical</option>
+              <option value="high" data-translate="high">High</option>
+              <option value="medium" data-translate="medium">Medium</option>
+              <option value="low" data-translate="low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="requestsGrid" class="card-grid">
+          <!-- Request cards will be populated here -->
+        </div>
+      </section>
+
+      <!-- ================= MAP PAGE ================= -->
+      <section class="page" data-page="map">
+        <div class="page-header">
+          <h1 data-translate="nearbyNGOs">Nearby NGOs</h1>
+          <div class="map-controls">
+            <button id="locateMeBtn" class="btn btn-outline">
+              <i class="fas fa-crosshairs"></i>
+              <span data-translate="locateMe">Locate Me</span>
+            </button>
+            <select id="categoryFilter" class="form-control">
+              <option value="all" data-translate="allCategories">All Categories</option>
+              <option value="food" data-translate="food">Food</option>
+              <option value="blood" data-translate="blood">Blood</option>
+              <option value="education" data-translate="education">Education</option>
+              <option value="shelter" data-translate="shelter">Shelter</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="map-container glass">
+          <div id="map"></div>
+          <div class="map-overlay">
+            <div class="map-stats">
+              <span id="ngoCount"><i class="fas fa-building"></i> 0 NGOs</span>
+              <span id="distanceInfo"><i class="fas fa-route"></i> Within 50km</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROFILE PAGE ================= -->
+      <section class="page" data-page="profile">
+        <div class="profile-container">
+          <div class="profile-card glass">
+            <div class="profile-header">
+              <div class="profile-avatar">
+                <img src="https://i.pravatar.cc/100" alt="Profile Picture"/>
+                <button class="btn btn-sm btn-outline edit-avatar">
+                  <i class="fas fa-camera"></i>
+                </button>
+              </div>
+              <div class="profile-info">
+                <h2 id="profileName">Aman Sharma</h2>
+                <p id="profileEmail">aman@gmail.com</p>
+                <span class="member-since" data-translate="memberSince">Member since March 2024</span>
+              </div>
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat">
+                <h3 id="totalDonations">12</h3>
+                <p data-translate="totalDonations">Total Donations</p>
+              </div>
+              <div class="stat">
+                <h3 id="impactPoints">245</h3>
+                <p data-translate="impactPoints">Impact Points</p>
+              </div>
+              <div class="stat">
+                <h3 id="communityRank">#127</h3>
+                <p data-translate="communityRank">Community Rank</p>
+              </div>
+            </div>
+
+            <form id="profileForm" class="profile-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-translate="fullName">Full Name</label>
+                  <input type="text" class="form-control" id="fullName" value="Aman Sharma" required>
+                </div>
+                <div class="form-group">
+                  <label data-translate="email">Email</label>
+                  <input type="email" class="form-control" id="email" value="aman@gmail.com" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label data-translate="phone">Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" value="+91 9999999999" required>
+                </div>
+                <div class="form-group">
+                  <label data-translate="city">City</label>
+                  <input type="text" class="form-control" id="city" value="Delhi" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label data-translate="address">Address</label>
+                <textarea class="form-control" id="address" rows="3" required>123, ABC Street, Delhi</textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  <span data-translate="save">Save Changes</span>
+                </button>
+                <button type="button" class="btn btn-outline" onclick="changePassword()">
+                  <i class="fas fa-key"></i>
+                  <span data-translate="changePassword">Change Password</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ================= MODALS ================= -->
+  <!-- Donation Modal -->
+  <div id="donateModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 data-translate="newDonation">New Donation</h3>
+        <button class="modal-close" onclick="closeModal('donateModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="donationForm">
+          <div class="form-group">
+            <label data-translate="category">Category</label>
+            <select class="form-control" id="donationCategory" required>
+              <option value="" data-translate="selectCategory">Select Category</option>
+              <option value="food" data-translate="food">Food</option>
+              <option value="blood" data-translate="blood">Blood</option>
+              <option value="books" data-translate="books">Books</option>
+              <option value="clothes" data-translate="clothes">Clothes</option>
+              <option value="medical" data-translate="medical">Medical Supplies</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label data-translate="description">Description</label>
+            <textarea class="form-control" id="donationDescription" rows="3" placeholder="Describe your donation..." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-translate="quantity">Quantity</label>
+              <input type="text" class="form-control" id="donationQuantity" placeholder="e.g., 5kg, 10 pieces" required>
+            </div>
+            <div class="form-group">
+              <label data-translate="urgency">Urgency Level</label>
+              <select class="form-control" id="donationUrgency">
+                <option value="normal" data-translate="normal">Normal</option>
+                <option value="urgent" data-translate="urgent">Urgent</option>
+                <option value="critical" data-translate="critical">Critical</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-translate="location">Pickup Location</label>
+            <input type="text" class="form-control" id="donationLocation" placeholder="Enter pickup address" required>
+          </div>
+
+          <div class="form-group">
+            <label data-translate="availability">Availability</label>
+            <input type="datetime-local" class="form-control" id="donationAvailability" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('donateModal')" data-translate="cancel">Cancel</button>
+        <button class="btn btn-primary" onclick="submitDonation()" data-translate="submit">Submit Donation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="../js/global-utils.js"></script>
+  <script src="../js/ai-engine.js"></script>
+  <script src="../data/database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+
+  <script>
+    // ================= INITIALIZATION =================
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeGlobalFeatures();
+      initializeDashboard();
+    });
+
+    function initializeDashboard() {
+      // Initialize AI Engine
+      const aiEngine = new AIMatchingEngine();
+      aiEngine.initializeData(
+        PUNARDAAN_DB.ngos,
+        PUNARDAAN_DB.requests,
+        PUNARDAAN_DB.donations
+      );
+
+      // Make aiEngine globally available for other functions
+      window.aiEngine = aiEngine;
+
+      // Load dashboard data
+      loadDashboardData();
+      loadAIRecommendations();
+      loadRecentActivity();
+      loadDonations();
+      loadRequests();
+
+      // Setup event listeners
+      setupEventListeners();
+
+      // Initialize map (lazy load)
+      let mapInitialized = false;
+
+      // Hide page loader
+      setTimeout(() => {
+        hidePageLoader();
+        showToast('Welcome back to Punardaan! 🎉', 'success');
+      }, 1000);
+    }
+
+    // ================= EVENT LISTENERS =================
+    function setupEventListeners() {
+      // Navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => switchPage(item.dataset.page));
+      });
+
+      // Search
+      document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+      // AI Recommendations refresh
+      document.getElementById('refreshRecommendations').addEventListener('click', function() {
+        const btn = this;
+        showLoading(btn, 'Refreshing...');
+        setTimeout(() => {
+          loadAIRecommendations();
+          showToast('Recommendations refreshed!', 'success');
+        }, 1000);
+      });
+
+      // Logout
+      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+      // Profile form
+      document.getElementById('profileForm').addEventListener('submit', handleProfileUpdate);
+
+      // Donation form
+      document.getElementById('donationForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitDonation();
+      });
+
+      // Filters
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => filterDonations(tab.dataset.filter));
+      });
+
+      document.getElementById('urgencyFilter').addEventListener('change', filterRequests);
+    }
+
+    // ================= PAGE SWITCHING =================
+    function switchPage(pageName) {
+      // Update navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.page === pageName);
+      });
+
+      // Update pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.toggle('active', page.dataset.page === pageName);
+      });
+
+      // Update page title
+      const pageTitles = {
+        dashboard: 'Dashboard',
+        donations: 'My Donations',
+        requests: 'Help Requests',
+        map: 'Nearby NGOs',
+        profile: 'Profile'
+      };
+
+      document.getElementById('pageTitle').textContent = getTranslation(pageTitles[pageName]);
+      document.getElementById('currentPage').textContent = getTranslation(pageTitles[pageName]);
+
+      // Initialize map if switching to map page
+      if (pageName === 'map' && !window.mapInstance) {
+        setTimeout(initializeMap, 100);
+      }
+    }
+
+    // ================= DASHBOARD DATA =================
+    function loadDashboardData() {
+      // Animate counters
+      document.querySelectorAll('.counter').forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        animateCounter(counter, target, 2000);
+      });
+
+      // Load user data from localStorage
+      const userData = getFromStorage('currentUser') || {
+        name: 'Aman Sharma',
+        donations: 12,
+        impact: 245,
+        rank: 127
+      };
+
+      document.getElementById('welcomeName').textContent = userData.name;
+      document.getElementById('userName').textContent = userData.name;
+      document.getElementById('profileName').textContent = userData.name;
+      document.getElementById('totalDonations').textContent = userData.donations;
+      document.getElementById('impactPoints').textContent = userData.impact;
+      document.getElementById('communityRank').textContent = `#${userData.rank}`;
+    }
+
+    // ================= AI RECOMMENDATIONS =================
+    function loadAIRecommendations() {
+      const recommendations = aiEngine.getSmartRecommendations('current_user', null, 3);
+      const container = document.getElementById('aiRecommendations');
+
+      if (recommendations.length === 0) {
+        container.innerHTML = '<p class="text-center">No recommendations available right now.</p>';
+        return;
+      }
+
+      container.innerHTML = recommendations.map(rec => `
+        <div class="card ai-recommendation-card glass">
+          <div class="card-header">
+            <h4>${rec.title}</h4>
+            <span class="urgency-badge urgency-${rec.urgency}">${rec.urgency}</span>
+          </div>
+          <div class="card-body">
+            <p><strong>${rec.ngoName}</strong></p>
+            <p>${rec.reason}</p>
+            <div class="match-score">
+              <div class="score-bar" style="width: ${rec.matchScore}%"></div>
+              <span>${rec.matchScore}% Match</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary btn-sm" onclick="viewRequestDetails('${rec.id}')">
+              View Details
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ================= RECENT ACTIVITY =================
+    function loadRecentActivity() {
+      const activities = [
+        {
+          type: 'donation',
+          title: 'Food Donation Completed',
+          description: '5kg rice donated to City Orphanage',
+          time: '2 hours ago',
+          icon: '🍲'
+        },
+        {
+          type: 'impact',
+          title: 'Lives Impacted',
+          description: 'Your donation helped 3 families',
+          time: '1 day ago',
+          icon: '👥'
+        },
+        {
+          type: 'achievement',
+          title: 'Achievement Unlocked',
+          description: 'Reached 10 donations milestone',
+          time: '3 days ago',
+          icon: '🏆'
+        }
+      ];
+
+      const container = document.getElementById('recentActivity');
+      container.innerHTML = activities.map(activity => `
+        <div class="activity-card glass">
+          <div class="activity-icon">${activity.icon}</div>
+          <div class="activity-content">
+            <h4>${activity.title}</h4>
+            <p>${activity.description}</p>
+            <small>${activity.time}</small>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ================= DONATIONS =================
+    function loadDonations() {
+      const donations = [
+        {
+          id: '1',
+          category: 'food',
+          title: 'Rice Donation',
+          description: '10kg rice donated to orphanage',
+          status: 'completed',
+          date: '2024-01-15',
+          impact: 'Fed 50 people'
+        },
+        {
+          id: '2',
+          category: 'blood',
+          title: 'Blood Donation',
+          description: '450ml blood donated',
+          status: 'completed',
+          date: '2024-01-10',
+          impact: 'Helped 3 patients'
+        },
+        {
+          id: '3',
+          category: 'books',
+          title: 'Book Donation',
+          description: '25 books for underprivileged students',
+          status: 'in_progress',
+          date: '2024-01-08',
+          impact: 'Educating 25 students'
+        }
+      ];
+
+      const container = document.getElementById('donationsGrid');
+      container.innerHTML = donations.map(donation => `
+        <div class="card donation-card glass" data-category="${donation.category}">
+          <div class="card-header">
+            <span class="category-tag tag ${donation.category}">${donation.category}</span>
+            <span class="status-badge status-${donation.status}">${donation.status}</span>
+          </div>
+          <div class="card-body">
+            <h3>${donation.title}</h3>
+            <p>${donation.description}</p>
+            <small>${donation.date} • ${donation.impact}</small>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-outline btn-sm" onclick="viewDonationDetails('${donation.id}')">
+              View Details
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ================= REQUESTS =================
+    function loadRequests() {
+      const requests = PUNARDAAN_DB.requests.slice(0, 6); // Load first 6 requests
+
+      const container = document.getElementById('requestsGrid');
+      container.innerHTML = requests.map(request => `
+        <div class="card request-card glass" data-urgency="${request.urgency}">
+          <div class="card-header">
+            <h3>${request.title}</h3>
+            <span class="urgency-badge urgency-${request.urgency}">${request.urgency}</span>
+          </div>
+          <div class="card-body">
+            <p>${request.description}</p>
+            <div class="request-meta">
+              <span><i class="fas fa-building"></i> ${request.ngoName || 'NGO'}</span>
+              <span><i class="fas fa-map-marker-alt"></i> ${request.location || 'Delhi'}</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" onclick="helpWithRequest('${request.id}')">
+              <i class="fas fa-hand-holding-heart"></i>
+              Help Now
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ================= MAP INITIALIZATION =================
+    function initializeMap() {
+      if (window.mapInstance) return;
+
+      const map = L.map('map').setView([28.6139, 77.2090], 11);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Add NGO markers
+      PUNARDAAN_DB.ngos.forEach(ngo => {
+        const marker = L.marker([ngo.latitude, ngo.longitude])
+          .addTo(map)
+          .bindPopup(`
+            <strong>${ngo.name}</strong><br>
+            ${ngo.address}<br>
+            Rating: ${ngo.rating}/5 ⭐<br>
+            <button class="btn btn-primary btn-sm" onclick="contactNGO('${ngo.id}')">Contact</button>
+          `);
+      });
+
+      // Add user location if available
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const userLatLng = [position.coords.latitude, position.coords.longitude];
+          L.marker(userLatLng)
+            .addTo(map)
+            .bindPopup('Your Location')
+            .openPopup();
+
+          map.setView(userLatLng, 13);
+        });
+      }
+
+      window.mapInstance = map;
+      updateMapTheme();
+    }
+
+    // ================= FORM HANDLERS =================
+    function submitDonation() {
+      if (!validateForm(document.getElementById('donationForm'))) {
+        showToast('Please fill all required fields correctly', 'error');
+        return;
+      }
+
+      const btn = document.querySelector('#donateModal .btn-primary');
+      showLoading(btn, 'Submitting...');
+
+      // Simulate API call
+      setTimeout(() => {
+        closeModal('donateModal');
+        showToast('Donation submitted successfully! 🎉', 'success');
+        loadDonations(); // Refresh donations list
+        switchPage('donations'); // Switch to donations page
+      }, 2000);
+    }
+
+    function handleProfileUpdate(e) {
+      e.preventDefault();
+
+      if (!validateForm(document.getElementById('profileForm'))) {
+        showToast('Please fill all required fields correctly', 'error');
+        return;
+      }
+
+      const btn = document.querySelector('#profileForm .btn-primary');
+      showLoading(btn, 'Saving...');
+
+      setTimeout(() => {
+        showToast('Profile updated successfully!', 'success');
+      }, 1500);
+    }
+
+    // ================= UTILITY FUNCTIONS =================
+    function handleSearch(e) {
+      const query = e.target.value.toLowerCase();
+      // Implement search functionality
+      console.log('Searching for:', query);
+    }
+
+    function filterDonations(category) {
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.filter === category);
+      });
+
+      const cards = document.querySelectorAll('.donation-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function filterRequests() {
+      const urgency = document.getElementById('urgencyFilter').value;
+      const cards = document.querySelectorAll('.request-card');
+
+      cards.forEach(card => {
+        if (urgency === 'all' || card.dataset.urgency === urgency) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function handleLogout() {
+      if (confirm(getTranslation('logoutConfirm'))) {
+        showToast('Logged out successfully', 'info');
+        setTimeout(() => {
+          window.location.href = '../auth/login.html';
+        }, 1000);
+      }
+    }
+
+    // ================= PLACEHOLDER FUNCTIONS =================
+    function viewRequestDetails(id) {
+      showToast('Loading request details...', 'info');
+    }
+
+    function viewDonationDetails(id) {
+      showToast('Loading donation details...', 'info');
+    }
+
+    function helpWithRequest(id) {
+      showToast('Connecting you with the NGO...', 'info');
+    }
+
+    function contactNGO(id) {
+      showToast('Opening contact form...', 'info');
+    }
+
+    function changePassword() {
+      showToast('Password change feature coming soon!', 'info');
+    }
+  </script>
+</body>
+</html>

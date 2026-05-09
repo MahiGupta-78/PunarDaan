@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Redistribution Dashboard | Punardaan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../shared/navbar.css">
+  <link rel="stylesheet" href="../shared/dashboard.css">
+  <link rel="stylesheet" href="../shared/footer.css">
+  <link rel="stylesheet" href="food.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR TOGGLE (Mobile) -->
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- DASHBOARD SIDEBAR -->
+<div class="dashboard-sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3 class="sidebar-title">🍲 Food Dashboard</h3>
+    <p class="sidebar-subtitle">Redistribute surplus food</p>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a></li>
+    <li><a href="#donate"><i class="fas fa-utensils icon"></i> Donate Food</a></li>
+    <li><a href="#ai-features"><i class="fas fa-brain icon"></i> AI Features</a></li>
+    <li><a href="#tracking"><i class="fas fa-route icon"></i> Track Donations</a></li>
+    <li><a href="#analytics"><i class="fas fa-chart-bar icon"></i> Analytics</a></li>
+    <li><a href="#ngo-match"><i class="fas fa-handshake icon"></i> NGO Matching</a></li>
+    <li><a href="#settings"><i class="fas fa-cog icon"></i> Settings</a></li>
+  </ul>
+</div>
+
+<!-- DASHBOARD NAVBAR -->
+<nav class="dashboard-navbar">
+  <a href="../index.html" class="navbar-logo">
+    <img src="../punardan.png" alt="Punardaan Logo">
+    <span>PUNARDAAN</span>
+  </a>
+
+  <div class="navbar-menu">
+    <a href="../index.html">Home</a>
+    <a href="../blood/blood.html">Blood</a>
+    <a href="../books/books.html">Books</a>
+    <a href="../clothes/clothes.html">Clothes</a>
+  </div>
+
+  <div class="navbar-actions">
+    <button class="notification-btn" onclick="showNotifications()">
+      <i class="fas fa-bell"></i>
+      <span class="notification-badge">3</span>
+    </button>
+
+    <div class="profile-section" onclick="toggleProfileMenu()">
+      <div class="profile-avatar">JD</div>
+      <div class="profile-info">
+        <span class="profile-name">John Doe</span>
+        <span class="profile-role">Food Donor</span>
+      </div>
+    </div>
+
+    <button id="darkModeBtn" onclick="toggleDarkMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+
+  <!-- DASHBOARD OVERVIEW -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="section-header">
+      <h1>🍲 Food Redistribution Dashboard</h1>
+      <p>Transform surplus food into hope for millions</p>
+    </div>
+
+    <!-- STATISTICS CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🍽️</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="15420">0</h2>
+          <p>Meals Saved</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏪</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="89">0</h2>
+          <p>NGOs Helped</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🚛</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="1247">0</h2>
+          <p>Pickups Completed</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🌱</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="2340">0</h2>
+          <p>CO₂ Reduced (kg)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI RECOMMENDATIONS -->
+    <div class="ai-recommendations">
+      <h2>🤖 AI Recommendations</h2>
+      <div class="ai-cards">
+        <div class="ai-card">
+          <div class="ai-icon">🎯</div>
+          <h3>Perfect Match Found</h3>
+          <p>Orphanage nearby needs 50kg of food today</p>
+          <button class="btn-primary">View Match</button>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-icon">⚡</div>
+          <h3>Urgent Pickup</h3>
+          <p>Food expiring in 2 hours at City Restaurant</p>
+          <button class="btn-orange">Schedule Now</button>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-icon">📊</div>
+          <h3>Analytics Insight</h3>
+          <p>Peak donation hours: 8-10 PM, save 40% more food</p>
+          <button class="btn-secondary">View Report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOD DONATION FORM -->
+  <section id="donate" class="dashboard-section">
+    <div class="section-header">
+      <h2>🍽️ Donate Food</h2>
+      <p>Share your surplus food with those in need</p>
+    </div>
+
+    <div class="donation-form-container">
+      <form id="foodDonationForm" class="donation-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="donorName">Donor Name *</label>
+            <input type="text" id="donorName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="restaurantName">Restaurant/Dhaba Name</label>
+            <input type="text" id="restaurantName" placeholder="Optional">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="foodType">Food Type *</label>
+            <select id="foodType" required>
+              <option value="">Select Food Type</option>
+              <option value="veg">Vegetarian</option>
+              <option value="nonveg">Non-Vegetarian</option>
+              <option value="mixed">Mixed</option>
+              <option value="bakery">Bakery Items</option>
+              <option value="packaged">Packaged Food</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="foodCategory">Food Category *</label>
+            <select id="foodCategory" required>
+              <option value="">Select Category</option>
+              <option value="fresh">Fresh Food</option>
+              <option value="expiring">Expiring Soon (2-4 hours)</option>
+              <option value="animal">Animal Consumable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="quantity">Quantity (KG) *</label>
+            <input type="number" id="quantity" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="peopleServed">Approx. People Served</label>
+            <input type="number" id="peopleServed" min="1">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cookingTime">Cooking Time</label>
+            <input type="time" id="cookingTime">
+          </div>
+
+          <div class="form-group">
+            <label for="expiryEstimate">Expiry Estimate (Hours)</label>
+            <input type="number" id="expiryEstimate" min="1" max="24">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pickupAddress">Pickup Address *</label>
+          <textarea id="pickupAddress" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pickupTiming">Pickup Timing *</label>
+            <select id="pickupTiming" required>
+              <option value="">Select Time</option>
+              <option value="immediate">Immediate (Within 1 hour)</option>
+              <option value="2hours">Within 2 hours</option>
+              <option value="4hours">Within 4 hours</option>
+              <option value="today">Today</option>
+              <option value="tomorrow">Tomorrow</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="gpsLocation">GPS Location</label>
+            <button type="button" class="btn-secondary" onclick="getCurrentLocation()">
+              <i class="fas fa-map-marker-alt"></i> Get Location
+            </button>
+          </div>
+        </div>
+
+        <!-- IMAGE UPLOAD -->
+        <div class="form-group">
+          <label>Upload Food Images</label>
+          <div class="image-upload-area" onclick="triggerFileInput()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Click to upload food images</p>
+            <span>PNG, JPG up to 5MB each</span>
+            <input type="file" id="foodImages" multiple accept="image/*" style="display:none;">
+          </div>
+          <div id="imagePreview" class="image-preview"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" rows="3" placeholder="Any special instructions..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+          <button type="submit" class="btn-primary">Submit Donation</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- AI FEATURES -->
+  <section id="ai-features" class="dashboard-section">
+    <div class="section-header">
+      <h2>🤖 AI Powered Features</h2>
+      <p>Smart technology for maximum impact</p>
+    </div>
+
+    <div class="ai-features-grid">
+      <div class="ai-feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>AI Freshness Detection</h3>
+        <p>Automatically analyzes food quality and safety using computer vision</p>
+        <div class="feature-status">
+          <span class="status-active">Active</span>
+        </div>
+      </div>
+
+      <div class="ai-feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>AI NGO Matching</h3>
+        <p>Smart algorithm matches donations with nearest NGOs based on capacity and needs</p>
+        <div class="feature-status">
+          <span class="status-active">Active</span>
+        </div>
+      </div>
+
+      <div class="ai-feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>AI Food Safety Prediction</h3>
+        <p>Predicts food safety and recommends optimal redistribution timing</p>
+        <div class="feature-status">
+          <span class="status-active">Active</span>
+        </div>
+      </div>
+
+      <div class="ai-feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>AI Waste Analytics</h3>
+        <p>Tracks food waste patterns and provides insights for reduction</p>
+        <div class="feature-status">
+          <span class="status-active">Active</span>
+        </div>
+      </div>
+
+      <div class="ai-feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3>AI Pickup Optimization</h3>
+        <p>Optimizes pickup routes for maximum efficiency and minimal carbon footprint</p>
+        <div class="feature-status">
+          <span class="status-active">Active</span>
+        </div>
+      </div>
+
+      <div class="ai-feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>AI Demand Prediction</h3>
+        <p>Predicts food demand patterns in different areas</p>
+        <div class="feature-status">
+          <span class="status-coming">Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACKING SECTION -->
+  <section id="tracking" class="dashboard-section">
+    <div class="section-header">
+      <h2>📍 Track Your Donations</h2>
+      <p>Real-time status of your food donations</p>
+    </div>
+
+    <div class="tracking-container">
+      <div class="tracking-card">
+        <div class="tracking-header">
+          <h3>Donation #FD2024001</h3>
+          <span class="status-badge status-active">In Progress</span>
+        </div>
+
+        <div class="progress-tracker">
+          <div class="progress-step completed">
+            <div class="step-icon">📝</div>
+            <div class="step-info">
+              <h4>Submitted</h4>
+              <p>2 hours ago</p>
+            </div>
+          </div>
+
+          <div class="progress-step completed">
+            <div class="step-icon">🤖</div>
+            <div class="step-info">
+              <h4>NGO Matched</h4>
+              <p>1 hour ago</p>
+            </div>
+          </div>
+
+          <div class="progress-step active">
+            <div class="step-icon">🚛</div>
+            <div class="step-info">
+              <h4>Pickup Assigned</h4>
+              <p>30 mins ago</p>
+            </div>
+          </div>
+
+          <div class="progress-step">
+            <div class="step-icon">📦</div>
+            <div class="step-info">
+              <h4>Food Collected</h4>
+              <p>Pending</p>
+            </div>
+          </div>
+
+          <div class="progress-step">
+            <div class="step-icon">🏪</div>
+            <div class="step-info">
+              <h4>Delivered</h4>
+              <p>Pending</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tracking-details">
+          <div class="detail-item">
+            <span class="label">NGO:</span>
+            <span class="value">Hope Foundation</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Pickup ETA:</span>
+            <span class="value">15 minutes</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Quantity:</span>
+            <span class="value">25 KG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="dashboard-section">
+    <div class="section-header">
+      <h2>📊 Your Impact Analytics</h2>
+      <p>Track your contribution to fighting hunger</p>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>🍽️ Meals Saved This Month</h3>
+        <div class="metric">
+          <span class="number">1,247</span>
+          <span class="change positive">+23%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:78%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🏪 NGOs Supported</h3>
+        <div class="metric">
+          <span class="number">12</span>
+          <span class="change positive">+2</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:85%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🚛 Pickup Success Rate</h3>
+        <div class="metric">
+          <span class="number">94%</span>
+          <span class="change positive">+5%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:94%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🌱 Carbon Footprint Saved</h3>
+        <div class="metric">
+          <span class="number">156 KG</span>
+          <span class="change positive">+18%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:67%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NGO MATCHING -->
+  <section id="ngo-match" class="dashboard-section">
+    <div class="section-header">
+      <h2>🤝 NGO Matching</h2>
+      <p>AI-powered NGO recommendations for your donations</p>
+    </div>
+
+    <div class="ngo-match-grid">
+      <div class="ngo-card">
+        <div class="ngo-header">
+          <div class="ngo-avatar">HF</div>
+          <div class="ngo-info">
+            <h3>Hope Foundation</h3>
+            <div class="ngo-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating">4.8</span>
+            </div>
+          </div>
+          <span class="match-score">98% Match</span>
+        </div>
+
+        <div class="ngo-details">
+          <div class="detail-row">
+            <span>Distance:</span>
+            <span>2.3 km</span>
+          </div>
+          <div class="detail-row">
+            <span>Capacity:</span>
+            <span>50 people</span>
+          </div>
+          <div class="detail-row">
+            <span>Acceptance Rate:</span>
+            <span>96%</span>
+          </div>
+          <div class="detail-row">
+            <span>Pickup ETA:</span>
+            <span>15 mins</span>
+          </div>
+        </div>
+
+        <div class="ngo-actions">
+          <button class="btn-primary">Select NGO</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+
+      <div class="ngo-card">
+        <div class="ngo-header">
+          <div class="ngo-avatar">CC</div>
+          <div class="ngo-info">
+            <h3>City Care</h3>
+            <div class="ngo-rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating">4.6</span>
+            </div>
+          </div>
+          <span class="match-score">92% Match</span>
+        </div>
+
+        <div class="ngo-details">
+          <div class="detail-row">
+            <span>Distance:</span>
+            <span>3.8 km</span>
+          </div>
+          <div class="detail-row">
+            <span>Capacity:</span>
+            <span>75 people</span>
+          </div>
+          <div class="detail-row">
+            <span>Acceptance Rate:</span>
+            <span>89%</span>
+          </div>
+          <div class="detail-row">
+            <span>Pickup ETA:</span>
+            <span>28 mins</span>
+          </div>
+        </div>
+
+        <div class="ngo-actions">
+          <button class="btn-primary">Select NGO</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+
+      <div class="ngo-card">
+        <div class="ngo-header">
+          <div class="ngo-avatar">FH</div>
+          <div class="ngo-info">
+            <h3>Food Help</h3>
+            <div class="ngo-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating">4.9</span>
+            </div>
+          </div>
+          <span class="match-score">95% Match</span>
+        </div>
+
+        <div class="ngo-details">
+          <div class="detail-row">
+            <span>Distance:</span>
+            <span>4.1 km</span>
+          </div>
+          <div class="detail-row">
+            <span>Capacity:</span>
+            <span>40 people</span>
+          </div>
+          <div class="detail-row">
+            <span>Acceptance Rate:</span>
+            <span>98%</span>
+          </div>
+          <div class="detail-row">
+            <span>Pickup ETA:</span>
+            <span>22 mins</span>
+          </div>
+        </div>
+
+        <div class="ngo-actions">
+          <button class="btn-primary">Select NGO</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DASHBOARD FOOTER -->
+<footer class="dashboard-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>🍲 Food Dashboard</h3>
+      <p>Transform surplus food into hope. Join thousands of donors making a difference every day.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <div class="footer-links">
+        <a href="#donate">Donate Food</a>
+        <a href="#tracking">Track Donations</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#ai-features">AI Features</a>
+        <a href="#ngo-match">NGO Matching</a>
+        <a href="../index.html">Home</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Support</h3>
+      <div class="footer-links">
+        <a href="#">Help Center</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>AI Features</h3>
+      <div class="footer-links">
+        <a href="#ai-features">Freshness Detection</a>
+        <a href="#ai-features">NGO Matching</a>
+        <a href="#ai-features">Safety Prediction</a>
+        <a href="#ai-features">Route Optimization</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-logo">
+      <img src="../punardan.png" alt="Punardaan Logo">
+      <span>PUNARDAAN</span>
+    </div>
+    <p>&copy; 2026 Punardaan. All rights reserved. | Made with ❤️ for humanity</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="food.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Impact Analytics | PUNARDAAN</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../css/global-styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { background: var(--bg-main); min-height: 100vh; }
+    
+    .impact-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 80px 0;
+      border-radius: 0 0 50px 50px;
+      margin-bottom: -50px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 30px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .impact-card {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 32px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* SVG Progress Ring Fix */
+    .progress-ring-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .progress-circle { transform: rotate(-90deg); }
+    .progress-circle circle {
+      fill: transparent;
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+    .progress-circle .bg { stroke: var(--border-color); }
+    .progress-circle .bar { 
+      stroke: var(--primary); 
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .percentage-label {
+      position: absolute;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 20px;
+    }
+
+    .badge-item {
+      background: var(--bg-main);
+      padding: 20px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .badge-item:hover {
+      transform: translateY(-5px) scale(1.05);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.1);
+    }
+
+    .badge-icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
+    .badge-name { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); }
+
+    .chart-container { height: 350px; width: 100%; position: relative; }
+
+    @media (max-width: 992px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .impact-header h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body class="light-mode">
+
+  <!-- LOADER -->
+  <div id="pageLoader" class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <nav class="navbar glass">
+    <div class="logo">
+      <img src="../punardan.png" alt="Logo" class="logo-img"/>
+      <span style="font-weight: 800; font-size: 1.5rem; color: var(--primary);">PUNARDAAN</span>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-outline btn-sm" onclick="window.location.href='../index.html'"><i class="fas fa-arrow-left"></i> Home</button>
+      <button id="darkModeBtn" class="btn btn-outline btn-sm"><i id="themeIcon" class="fas fa-moon"></i></button>
+      <button id="languageBtn" class="btn btn-outline btn-sm"><i class="fas fa-globe"></i> EN</button>
+    </div>
+  </nav>
+
+  <header class="impact-header">
+    <div class="container">
+      <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 15px;">Global Impact Dashboard</h1>
+      <p style="font-size: 1.25rem; opacity: 0.9; max-width: 600px;">Real-time humanitarian metrics showing how our community is changing lives across India.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="main-grid">
+      <div class="left-col">
+        <!-- Analytics -->
+        <section class="impact-card">
+          <h2 class="mb-4"><i class="fas fa-chart-area"></i> Donation Trends</h2>
+          <div class="chart-container">
+            <canvas id="donationChart"></canvas>
+          </div>
+        </section>
+
+        <!-- Achievements -->
+        <section class="impact-card">
+          <h2 class="mb-4"><i class="fas fa-medal"></i> Community Achievements</h2>
+          <div class="badge-grid">
+            <div class="badge-item">
+              <span class="badge-icon">🍲</span>
+              <span class="badge-name">Meal Hero</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-icon">🩸</span>
+              <span class="badge-name">Lifesaver</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-icon">📚</span>
+              <span class="badge-name">Educator</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-icon">🤝</span>
+              <span class="badge-name">Volunteer</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-icon">🏆</span>
+              <span class="badge-name">Gold Donor</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 class="counter" data-target="15420">0</h3>
+            <p>People Helped</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="counter" data-target="45200">0</h3>
+            <p>Meals Served</p>
+          </div>
+          <div class="stat-card">
+            <h3 class="counter" data-target="1240">0</h3>
+            <p>Blood Units</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <!-- Impact Score -->
+        <section class="impact-card" style="text-align: center;">
+          <h3 class="mb-4">Community Goal</h3>
+          <div class="progress-ring-container">
+            <svg class="progress-circle" width="200" height="200">
+              <circle class="bg" cx="100" cy="100" r="85"></circle>
+              <circle class="bar" cx="100" cy="100" r="85" stroke-dasharray="534" stroke-dashoffset="534"></circle>
+            </svg>
+            <div class="percentage-label"><span class="percentage">78</span>%</div>
+          </div>
+          <p style="font-weight: 700; margin-top: 15px;">Monthly Target Reached</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">We are almost there! Join the movement to reach 100%.</p>
+          <button class="btn btn-primary mt-4" style="width: 100%;">Donate Now</button>
+        </section>
+
+        <!-- Leaderboard -->
+        <section class="impact-card">
+          <h3 class="mb-4"><i class="fas fa-trophy"></i> Leaderboard</h3>
+          <div id="leaderboardList">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+              <span style="font-weight: 800; color: var(--primary);">#1</span>
+              <img src="https://i.pravatar.cc/40?u=1" style="border-radius: 50%;">
+              <div style="flex: 1;"><p style="font-weight: 700;">Aryan M.</p><p style="font-size: 0.75rem; color: var(--text-muted);">Gold Donor</p></div>
+              <span style="font-weight: 800;">12,400 pts</span>
+            </div>
+            <!-- More items -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer style="padding: 60px 0; background: #020617; color: white; margin-top: 100px;">
+    <div class="container" style="text-align: center;">
+      <p style="opacity: 0.5;">&copy; 2026 PUNARDAAN Humanitarian Platform. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/auth.js"></script>
+  <script src="../js/translations.js"></script>
+  <script src="../js/impact.js"></script>
+  <script src="../js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ImpactSystem.init();
+    });
+  </script>
+</body>
+</html>

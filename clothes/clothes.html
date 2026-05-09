@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothes Donation Dashboard | Punardaan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../shared/navbar.css">
+  <link rel="stylesheet" href="../shared/dashboard.css">
+  <link rel="stylesheet" href="../shared/footer.css">
+  <link rel="stylesheet" href="clothes.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR TOGGLE (Mobile) -->
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- DASHBOARD SIDEBAR -->
+<div class="dashboard-sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3 class="sidebar-title">👕 Clothes Dashboard</h3>
+    <p class="sidebar-subtitle">Dress up lives with dignity</p>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a></li>
+    <li><a href="#donate-clothes"><i class="fas fa-tshirt icon"></i> Donate Clothes</a></li>
+    <li><a href="#ai-classification"><i class="fas fa-brain icon"></i> AI Classification</a></li>
+    <li><a href="#distribution"><i class="fas fa-truck icon"></i> Distribution</a></li>
+    <li><a href="#my-donations"><i class="fas fa-box icon"></i> My Donations</a></li>
+    <li><a href="#impact-stories"><i class="fas fa-heart icon"></i> Impact Stories</a></li>
+    <li><a href="#analytics"><i class="fas fa-chart-bar icon"></i> Analytics</a></li>
+    <li><a href="#settings"><i class="fas fa-cog icon"></i> Settings</a></li>
+  </ul>
+</div>
+
+<!-- DASHBOARD NAVBAR -->
+<nav class="dashboard-navbar">
+  <a href="../index.html" class="navbar-logo">
+    <img src="../punardan.png" alt="Punardaan Logo">
+    <span>PUNARDAAN</span>
+  </a>
+
+  <div class="navbar-menu">
+    <a href="../food/food.html">Food</a>
+    <a href="../blood/blood.html">Blood</a>
+    <a href="../books/books.html">Books</a>
+    <a href="#dashboard">Clothes</a>
+  </div>
+
+  <div class="navbar-actions">
+    <button class="notification-btn" onclick="showNotifications()">
+      <i class="fas fa-bell"></i>
+      <span class="notification-badge">4</span>
+    </button>
+
+    <div class="profile-section" onclick="toggleProfileMenu()">
+      <div class="profile-avatar">JD</div>
+      <div class="profile-info">
+        <span class="profile-name">John Doe</span>
+        <span class="profile-role">Clothes Donor</span>
+      </div>
+    </div>
+
+    <button id="darkModeBtn" onclick="toggleDarkMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+
+  <!-- DASHBOARD OVERVIEW -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="section-header">
+      <h1>👕 Clothes Donation Dashboard</h1>
+      <p>Give the gift of warmth and dignity</p>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👕</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="2156">0</h2>
+          <p>Items Donated</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏠</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="127">0</h2>
+          <p>Families Helped</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">♻️</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="89">0</h2>
+          <p>Items Recycled</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target">95</h2>
+          <p>AI Accuracy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI CLASSIFICATION PREVIEW -->
+    <div class="ai-preview">
+      <h2>🤖 AI Classification Preview</h2>
+      <div class="classification-demo">
+        <div class="demo-item">
+          <div class="item-image">
+            <img src="https://via.placeholder.com/150x150/10b981/white?text=T-Shirt" alt="T-Shirt">
+          </div>
+          <div class="classification-result">
+            <h4>T-Shirt (Cotton)</h4>
+            <span class="condition excellent">Excellent Condition</span>
+            <p>Perfect for adults, can serve 3-4 people</p>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <div class="item-image">
+            <img src="https://via.placeholder.com/150x150/059669/white?text=Jeans" alt="Jeans">
+          </div>
+          <div class="classification-result">
+            <h4>Jeans (Denim)</h4>
+            <span class="condition good">Good Condition</span>
+            <p>Suitable for teenagers, durable material</p>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <div class="item-image">
+            <img src="https://via.placeholder.com/150x150/dc2626/white?text=Jacket" alt="Jacket">
+          </div>
+          <div class="classification-result">
+            <h4>Winter Jacket</h4>
+            <span class="condition fair">Fair Condition</span>
+            <p>Can be repaired, perfect for cold climates</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- URGENT NEEDS -->
+    <div class="urgent-needs">
+      <h2>🚨 Urgent Clothing Needs</h2>
+      <div class="needs-grid">
+        <div class="need-card">
+          <div class="need-header">
+            <span class="category">Winter Clothing</span>
+            <span class="priority critical">Critical</span>
+          </div>
+          <h3>Homeless Shelter - Delhi</h3>
+          <p>50 families need warm clothes for upcoming winter</p>
+          <div class="need-details">
+            <span>Items needed: Jackets, Sweaters, Blankets</span>
+            <span>Deadline: 15 Dec 2024</span>
+          </div>
+          <button class="btn-urgent">Contribute Now</button>
+        </div>
+
+        <div class="need-card">
+          <div class="need-header">
+            <span class="category">School Uniforms</span>
+            <span class="priority high">High</span>
+          </div>
+          <h3>Government School - Mumbai</h3>
+          <p>200 students need school uniforms</p>
+          <div class="need-details">
+            <span>Items needed: Shirts, Pants, Shoes</span>
+            <span>Deadline: 30 Dec 2024</span>
+          </div>
+          <button class="btn-urgent">Contribute Now</button>
+        </div>
+
+        <div class="need-card">
+          <div class="need-header">
+            <span class="category">Children's Clothes</span>
+            <span class="priority medium">Medium</span>
+          </div>
+          <h3>Orphanage - Bangalore</h3>
+          <p>75 children need new clothes for festivals</p>
+          <div class="need-details">
+            <span>Items needed: Festive wear, Casual clothes</span>
+            <span>Deadline: 20 Jan 2025</span>
+          </div>
+          <button class="btn-urgent">Contribute Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE CLOTHES -->
+  <section id="donate-clothes" class="dashboard-section">
+    <div class="section-header">
+      <h2>👕 Donate Clothes</h2>
+      <p>Share your wardrobe with those in need</p>
+    </div>
+
+    <div class="donation-form-container">
+      <form id="clothesDonationForm" class="donation-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="donorName">Donor Name *</label>
+            <input type="text" id="donorName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+          </div>
+
+          <div class="form-group">
+            <label for="clothesCondition">Overall Condition *</label>
+            <select id="clothesCondition" required>
+              <option value="">Select Condition</option>
+              <option value="new">New/Unused</option>
+              <option value="excellent">Excellent</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair (Repairable)</option>
+              <option value="poor">Poor (For Recycling)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CLOTHES CATEGORIES -->
+        <div class="clothes-categories">
+          <h3>👔 Select Clothing Categories</h3>
+          <div class="category-grid">
+            <label class="category-checkbox">
+              <input type="checkbox" value="shirts">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-tshirt"></i>
+                <span>Shirts/T-Shirts</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="pants">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-stream"></i>
+                <span>Pants/Trousers</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="dresses">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-female"></i>
+                <span>Dresses/Skirts</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="jackets">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-vest"></i>
+                <span>Jackets/Coats</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="sweaters">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-sweater"></i>
+                <span>Sweaters/Hoodies</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="shoes">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-shoe-prints"></i>
+                <span>Shoes/Sandals</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="underwear">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-briefcase"></i>
+                <span>Underwear/Socks</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="blankets">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-bed"></i>
+                <span>Blankets/Bedsheets</span>
+              </div>
+            </label>
+
+            <label class="category-checkbox">
+              <input type="checkbox" value="other">
+              <span class="checkmark"></span>
+              <div class="category-info">
+                <i class="fas fa-plus"></i>
+                <span>Other Items</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- SIZE AND QUANTITY -->
+        <div class="size-quantity-section">
+          <h3>📏 Size & Quantity Details</h3>
+          <div id="sizeQuantityContainer">
+            <div class="size-quantity-item">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Size *</label>
+                  <select class="itemSize" required>
+                    <option value="">Select Size</option>
+                    <option value="XS">XS (Extra Small)</option>
+                    <option value="S">S (Small)</option>
+                    <option value="M">M (Medium)</option>
+                    <option value="L">L (Large)</option>
+                    <option value="XL">XL (Extra Large)</option>
+                    <option value="XXL">XXL</option>
+                    <option value="kids">Kids (2-12 years)</option>
+                    <option value="infant">Infant (0-2 years)</option>
+                    <option value="universal">Universal Size</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Gender *</label>
+                  <select class="itemGender" required>
+                    <option value="">Select Gender</option>
+                    <option value="men">Men</option>
+                    <option value="women">Women</option>
+                    <option value="boys">Boys</option>
+                    <option value="girls">Girls</option>
+                    <option value="unisex">Unisex</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Quantity *</label>
+                  <input type="number" class="itemQuantity" min="1" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Age Group</label>
+                  <select class="itemAgeGroup">
+                    <option value="">Select Age Group</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-12">6-12 years</option>
+                    <option value="13-17">13-17 years (Teen)</option>
+                    <option value="18-35">18-35 years (Young Adult)</option>
+                    <option value="36-55">36-55 years (Adult)</option>
+                    <option value="55+">55+ years (Senior)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pickupAddress">Pickup Address *</label>
+            <textarea id="pickupAddress" rows="3" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="preferredTime">Preferred Pickup Time *</label>
+            <select id="preferredTime" required>
+              <option value="">Select Time</option>
+              <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+              <option value="afternoon">Afternoon (1:00 PM - 5:00 PM)</option>
+              <option value="evening">Evening (6:00 PM - 9:00 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CLOTHES PHOTOS -->
+        <div class="form-group">
+          <label>Upload Clothes Photos</label>
+          <div class="image-upload-area" onclick="triggerFileInput()">
+            <i class="fas fa-camera"></i>
+            <p>Click to upload clothes photos</p>
+            <span>PNG, JPG up to 5MB each</span>
+            <input type="file" id="clothesImages" multiple accept="image/*" style="display:none;">
+          </div>
+          <div id="imagePreview" class="image-preview"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" rows="3" placeholder="Any special instructions, brand details, etc."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+          <button type="submit" class="btn-primary">Schedule Pickup</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- AI CLASSIFICATION -->
+  <section id="ai-classification" class="dashboard-section">
+    <div class="section-header">
+      <h2>🤖 AI Classification System</h2>
+      <p>Smart sorting for maximum impact</p>
+    </div>
+
+    <div class="ai-classification-container">
+      <div class="classification-features">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Automatic Sorting</h3>
+          <p>AI analyzes clothing type, size, condition, and suitability</p>
+          <div class="feature-status active">Active</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📏</div>
+          <h3>Size Detection</h3>
+          <p>Accurate size estimation from images using computer vision</p>
+          <div class="feature-status active">Active</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>Quality Assessment</h3>
+          <p>Evaluates wear, tear, and repair potential</p>
+          <div class="feature-status active">Active</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Smart Matching</h3>
+          <p>Matches donations with specific needs and demographics</p>
+          <div class="feature-status active">Active</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">♻️</div>
+          <h3>Recycling Classification</h3>
+          <p>Identifies items suitable for recycling or upcycling</p>
+          <div class="feature-status active">Active</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Impact Prediction</h3>
+          <p>Predicts how many people each donation can help</p>
+          <div class="feature-status coming">Coming Soon</div>
+        </div>
+      </div>
+
+      <div class="classification-demo">
+        <h3>Try AI Classification</h3>
+        <div class="demo-upload">
+          <input type="file" id="aiImageInput" accept="image/*" style="display:none;">
+          <button class="btn-primary" onclick="triggerAIClassification()">
+            <i class="fas fa-upload"></i> Upload Image for Analysis
+          </button>
+          <p>Upload a photo of clothing to see AI classification in action</p>
+        </div>
+        <div id="aiResult" class="ai-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISTRIBUTION -->
+  <section id="distribution" class="dashboard-section">
+    <div class="section-header">
+      <h2>🚛 Distribution Network</h2>
+      <p>Track how your donations reach those in need</p>
+    </div>
+
+    <div class="distribution-container">
+      <div class="distribution-map">
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt"></i>
+          <h3>Distribution Network</h3>
+          <p>Real-time tracking of clothing distribution</p>
+          <button class="btn-primary" onclick="loadDistributionMap()">View Map</button>
+        </div>
+      </div>
+
+      <div class="distribution-stats">
+        <div class="dist-stat">
+          <h3>Active Routes</h3>
+          <span class="stat-number">12</span>
+        </div>
+
+        <div class="dist-stat">
+          <h3>Items in Transit</h3>
+          <span class="stat-number">487</span>
+        </div>
+
+        <div class="dist-stat">
+          <h3>Delivery Success</h3>
+          <span class="stat-number">96%</span>
+        </div>
+
+        <div class="dist-stat">
+          <h3>Avg. Delivery Time</h3>
+          <span class="stat-number">2.3 days</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-deliveries">
+      <h3>Recent Deliveries</h3>
+      <div class="delivery-timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker completed"></div>
+          <div class="timeline-content">
+            <h4>Delivered to City Orphanage</h4>
+            <p>25 winter jackets, 30 sweaters, 50 t-shirts</p>
+            <span class="timeline-date">2 hours ago</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker in-transit"></div>
+          <div class="timeline-content">
+            <h4>En route to Rural School</h4>
+            <p>100 school uniforms, 75 pairs of shoes</p>
+            <span class="timeline-date">5 hours ago</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker completed"></div>
+          <div class="timeline-content">
+            <h4>Delivered to Homeless Shelter</h4>
+            <p>40 blankets, 60 sets of warm clothing</p>
+            <span class="timeline-date">1 day ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY DONATIONS -->
+  <section id="my-donations" class="dashboard-section">
+    <div class="section-header">
+      <h2>📦 My Donations</h2>
+      <p>Track your clothing donation journey</p>
+    </div>
+
+    <div class="donations-container">
+      <div class="donation-card">
+        <div class="donation-header">
+          <h3>Winter Clothing Drive</h3>
+          <span class="status completed">Delivered</span>
+        </div>
+        <div class="donation-details">
+          <div class="donation-items">
+            <span>15 Jackets, 20 Sweaters, 25 T-Shirts</span>
+          </div>
+          <div class="donation-meta">
+            <span>Delivered to: Hope Shelter</span>
+            <span>Date: 15 Dec 2024</span>
+            <span>Helped: 45 people</span>
+          </div>
+        </div>
+        <div class="donation-actions">
+          <button class="btn-secondary">View Certificate</button>
+          <button class="btn-secondary">Share Impact</button>
+        </div>
+      </div>
+
+      <div class="donation-card">
+        <div class="donation-header">
+          <h3>School Uniforms</h3>
+          <span class="status in-transit">In Transit</span>
+        </div>
+        <div class="donation-details">
+          <div class="donation-items">
+            <span>50 Shirts, 50 Pants, 30 Pairs Shoes</span>
+          </div>
+          <div class="donation-meta">
+            <span>Destination: Government School</span>
+            <span>Pickup: 18 Dec 2024</span>
+            <span>ETA: 2 days</span>
+          </div>
+        </div>
+        <div class="donation-actions">
+          <button class="btn-secondary">Track Delivery</button>
+        </div>
+      </div>
+
+      <div class="donation-card">
+        <div class="donation-header">
+          <h3>Summer Clothes</h3>
+          <span class="status scheduled">Pickup Scheduled</span>
+        </div>
+        <div class="donation-details">
+          <div class="donation-items">
+            <span>30 T-Shirts, 20 Shorts, 15 Dresses</span>
+          </div>
+          <div class="donation-meta">
+            <span>Pickup: Tomorrow, 10:00 AM</span>
+            <span>From: Your location</span>
+          </div>
+        </div>
+        <div class="donation-actions">
+          <button class="btn-secondary">Reschedule</button>
+          <button class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT STORIES -->
+  <section id="impact-stories" class="dashboard-section">
+    <div class="section-header">
+      <h2>❤️ Impact Stories</h2>
+      <p>Real stories of lives changed through your donations</p>
+    </div>
+
+    <div class="stories-container">
+      <div class="story-card">
+        <div class="story-image">
+          <img src="https://via.placeholder.com/300x200/10b981/white?text=Story" alt="Impact Story">
+        </div>
+        <div class="story-content">
+          <h3>"A Warm Winter for My Family"</h3>
+          <p>"Thanks to generous donors, my three children now have warm jackets for the cold Delhi winters. We were struggling without proper clothing, but now they can play outside without shivering."</p>
+          <div class="story-meta">
+            <span>- Priya Sharma, Mother of 3</span>
+            <span>Received: Winter jackets & sweaters</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div class="story-image">
+          <img src="https://via.placeholder.com/300x200/059669/white?text=Story" alt="Impact Story">
+        </div>
+        <div class="story-content">
+          <h3>"School Uniforms Changed Everything"</h3>
+          <p>"I was bullied at school for not having proper uniform. Thanks to donors who provided me with new school clothes, I now feel confident and can focus on my studies."</p>
+          <div class="story-meta">
+            <span>- Rahul Kumar, Class 8 Student</span>
+            <span>Received: Complete school uniform</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-card">
+        <div class="story-image">
+          <img src="https://via.placeholder.com/300x200/dc2626/white?text=Story" alt="Impact Story">
+        </div>
+        <div class="story-content">
+          <h3>"From Rags to Respect"</h3>
+          <p>"Living on the streets was hard, but receiving clean, decent clothes from donors gave me back my dignity. Now I can look for work without shame."</p>
+          <div class="story-meta">
+            <span>- Anil Verma, Job Seeker</span>
+            <span>Received: Professional attire & shoes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="dashboard-section">
+    <div class="section-header">
+      <h2>📊 Your Impact Analytics</h2>
+      <p>Track your contribution to clothing the needy</p>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>👕 Total Items Donated</h3>
+        <div class="metric">
+          <span class="number">2,156</span>
+          <span class="change positive">+234 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:78%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>👥 People Dressed</h3>
+        <div class="metric">
+          <span class="number">1,247</span>
+          <span class="change positive">+89 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:85%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>♻️ Items Recycled</h3>
+        <div class="metric">
+          <span class="number">89</span>
+          <span class="change positive">+12 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:67%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🌟 Donor Rank</h3>
+        <div class="metric">
+          <span class="number">Gold</span>
+          <span class="change positive">Top 5%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:95%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DASHBOARD FOOTER -->
+<footer class="dashboard-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>👕 Clothes Dashboard</h3>
+      <p>Clothing isn't just about covering the body, it's about restoring dignity and hope. Join thousands of donors making a difference one garment at a time.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <div class="footer-links">
+        <a href="#donate-clothes">Donate Clothes</a>
+        <a href="#ai-classification">AI Classification</a>
+        <a href="#distribution">Distribution</a>
+        <a href="#my-donations">My Donations</a>
+        <a href="#impact-stories">Impact Stories</a>
+        <a href="#analytics">Analytics</a>
+        <a href="../index.html">Home</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Clothing Categories</h3>
+      <div class="footer-links">
+        <a href="#">Winter Clothing</a>
+        <a href="#">School Uniforms</a>
+        <a href="#">Professional Attire</a>
+        <a href="#">Children's Clothes</a>
+        <a href="#">Festive Wear</a>
+        <a href="#">Daily Wear</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Support Programs</h3>
+      <div class="footer-links">
+        <a href="#">Homeless Shelters</a>
+        <a href="#">Orphanages</a>
+        <a href="#">Rural Communities</a>
+        <a href="#">Disaster Relief</a>
+        <a href="#">Education Support</a>
+        <a href="#">Job Seekers</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-logo">
+      <img src="../punardan.png" alt="Punardaan Logo">
+      <span>PUNARDAAN</span>
+    </div>
+    <p>&copy; 2026 Punardaan. All rights reserved. | Made with ❤️ for dignity</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="clothes.js"></script>
+
+</body>
+</html>

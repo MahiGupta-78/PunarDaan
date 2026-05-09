@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Donation Dashboard | Punardaan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../shared/navbar.css">
+  <link rel="stylesheet" href="../shared/dashboard.css">
+  <link rel="stylesheet" href="../shared/footer.css">
+  <link rel="stylesheet" href="blood.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR TOGGLE (Mobile) -->
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- DASHBOARD SIDEBAR -->
+<div class="dashboard-sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3 class="sidebar-title">🩸 Blood Dashboard</h3>
+    <p class="sidebar-subtitle">Save lives through blood donation</p>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a></li>
+    <li><a href="#donate-blood"><i class="fas fa-tint icon"></i> Donate Blood</a></li>
+    <li><a href="#request-blood"><i class="fas fa-hand-holding-heart icon"></i> Request Blood</a></li>
+    <li><a href="#emergency-sos"><i class="fas fa-exclamation-triangle icon"></i> Emergency SOS</a></li>
+    <li><a href="#live-map"><i class="fas fa-map-marked-alt icon"></i> Live Map</a></li>
+    <li><a href="#donation-history"><i class="fas fa-history icon"></i> History</a></li>
+    <li><a href="#analytics"><i class="fas fa-chart-bar icon"></i> Analytics</a></li>
+    <li><a href="#settings"><i class="fas fa-cog icon"></i> Settings</a></li>
+  </ul>
+</div>
+
+<!-- DASHBOARD NAVBAR -->
+<nav class="dashboard-navbar">
+  <a href="../index.html" class="navbar-logo">
+    <img src="../punardan.png" alt="Punardaan Logo">
+    <span>PUNARDAAN</span>
+  </a>
+
+  <div class="navbar-menu">
+    <a href="../food/food.html">Food</a>
+    <a href="#dashboard">Blood</a>
+    <a href="../books/books.html">Books</a>
+    <a href="../clothes/clothes.html">Clothes</a>
+  </div>
+
+  <div class="navbar-actions">
+    <button class="notification-btn" onclick="showNotifications()">
+      <i class="fas fa-bell"></i>
+      <span class="notification-badge">5</span>
+    </button>
+
+    <div class="profile-section" onclick="toggleProfileMenu()">
+      <div class="profile-avatar">JD</div>
+      <div class="profile-info">
+        <span class="profile-name">John Doe</span>
+        <span class="profile-role">Blood Donor</span>
+      </div>
+    </div>
+
+    <button id="darkModeBtn" onclick="toggleDarkMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+
+  <!-- DASHBOARD OVERVIEW -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="section-header">
+      <h1>🩸 Blood Donation Dashboard</h1>
+      <p>Every drop counts. Join the life-saving mission</p>
+    </div>
+
+    <!-- BLOOD TYPE COMPATIBILITY -->
+    <div class="blood-compatibility">
+      <h2>Your Blood Type: <span class="blood-type">O+</span></h2>
+      <div class="compatibility-grid">
+        <div class="compatibility-card">
+          <h3>Can Donate To</h3>
+          <div class="blood-types">
+            <span class="blood-type-chip">O+</span>
+            <span class="blood-type-chip">A+</span>
+            <span class="blood-type-chip">B+</span>
+            <span class="blood-type-chip">AB+</span>
+          </div>
+        </div>
+
+        <div class="compatibility-card">
+          <h3>Can Receive From</h3>
+          <div class="blood-types">
+            <span class="blood-type-chip">O-</span>
+            <span class="blood-type-chip">O+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATISTICS CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🩸</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="47">0</h2>
+          <p>Lives Saved</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏥</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="23">0</h2>
+          <p>Hospitals Served</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">⏰</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="56">0</h2>
+          <p>Days Since Last Donation</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="98">0</h2>
+          <p>Match Accuracy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- URGENT REQUESTS -->
+    <div class="urgent-requests">
+      <h2>🚨 Urgent Blood Requests</h2>
+      <div class="urgent-cards">
+        <div class="urgent-card">
+          <div class="urgent-header">
+            <span class="blood-type urgent">A+</span>
+            <span class="priority">Critical</span>
+          </div>
+          <h3>City Hospital - Emergency Surgery</h3>
+          <p>Patient: 35-year-old male, accident victim</p>
+          <div class="urgent-details">
+            <span>Distance: 2.3 km</span>
+            <span>Units needed: 3</span>
+            <span>Time left: 4 hours</span>
+          </div>
+          <button class="btn-urgent">Respond Now</button>
+        </div>
+
+        <div class="urgent-card">
+          <div class="urgent-header">
+            <span class="blood-type urgent">O-</span>
+            <span class="priority">High</span>
+          </div>
+          <h3>Apollo Hospital - Cancer Treatment</h3>
+          <p>Patient: 28-year-old female, chemotherapy</p>
+          <div class="urgent-details">
+            <span>Distance: 5.1 km</span>
+            <span>Units needed: 2</span>
+            <span>Time left: 8 hours</span>
+          </div>
+          <button class="btn-urgent">Respond Now</button>
+        </div>
+
+        <div class="urgent-card">
+          <div class="urgent-header">
+            <span class="blood-type urgent">B+</span>
+            <span class="priority">Medium</span>
+          </div>
+          <h3>Medicare Center - Child Anemia</h3>
+          <p>Patient: 12-year-old child, severe anemia</p>
+          <div class="urgent-details">
+            <span>Distance: 3.7 km</span>
+            <span>Units needed: 1</span>
+            <span>Time left: 12 hours</span>
+          </div>
+          <button class="btn-urgent">Respond Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE BLOOD -->
+  <section id="donate-blood" class="dashboard-section">
+    <div class="section-header">
+      <h2>🩸 Donate Blood</h2>
+      <p>Schedule your blood donation and save lives</p>
+    </div>
+
+    <div class="donation-form-container">
+      <form id="bloodDonationForm" class="donation-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="donorName">Full Name *</label>
+            <input type="text" id="donorName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age *</label>
+            <input type="number" id="age" min="18" max="65" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bloodType">Blood Type *</label>
+            <select id="bloodType" required>
+              <option value="">Select Blood Type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender *</label>
+            <select id="gender" required>
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Weight (KG) *</label>
+            <input type="number" id="weight" min="45" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lastDonation">Last Donation Date</label>
+            <input type="date" id="lastDonation">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="preferredCenter">Preferred Donation Center *</label>
+          <select id="preferredCenter" required>
+            <option value="">Select Center</option>
+            <option value="city-hospital">City General Hospital</option>
+            <option value="apollo">Apollo Blood Bank</option>
+            <option value="red-cross">Red Cross Center</option>
+            <option value="medicare">Medicare Blood Center</option>
+            <option value="mobile-camp">Mobile Blood Donation Camp</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="preferredDate">Preferred Date *</label>
+            <input type="date" id="preferredDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="preferredTime">Preferred Time *</label>
+            <select id="preferredTime" required>
+              <option value="">Select Time</option>
+              <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+              <option value="afternoon">Afternoon (1:00 PM - 5:00 PM)</option>
+              <option value="evening">Evening (6:00 PM - 9:00 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- HEALTH QUESTIONS -->
+        <div class="health-questions">
+          <h3>Health Screening Questions</h3>
+
+          <div class="question-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="recentIllness">
+              Have you had any recent illness or infection?
+            </label>
+          </div>
+
+          <div class="question-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="medication">
+              Are you currently taking any medication?
+            </label>
+          </div>
+
+          <div class="question-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="pregnant">
+              Are you pregnant or breastfeeding? (Female donors)
+            </label>
+          </div>
+
+          <div class="question-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="tattoo">
+              Have you had a tattoo or piercing in the last 6 months?
+            </label>
+          </div>
+
+          <div class="question-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="travel">
+              Have you traveled to malaria-endemic areas recently?
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="additionalNotes">Additional Notes</label>
+          <textarea id="additionalNotes" rows="3" placeholder="Any medical conditions or concerns..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="checkEligibility()">Check Eligibility</button>
+          <button type="submit" class="btn-primary">Schedule Donation</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- REQUEST BLOOD -->
+  <section id="request-blood" class="dashboard-section">
+    <div class="section-header">
+      <h2>🩸 Request Blood</h2>
+      <p>Find blood donors in your area</p>
+    </div>
+
+    <div class="request-form-container">
+      <form id="bloodRequestForm" class="donation-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="patientName">Patient Name *</label>
+            <input type="text" id="patientName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="relationship">Your Relationship</label>
+            <select id="relationship">
+              <option value="">Select Relationship</option>
+              <option value="self">Self</option>
+              <option value="family">Family Member</option>
+              <option value="friend">Friend</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="requestBloodType">Required Blood Type *</label>
+            <select id="requestBloodType" required>
+              <option value="">Select Blood Type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="unitsNeeded">Units Needed *</label>
+            <input type="number" id="unitsNeeded" min="1" max="10" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="requesterName">Requester Name *</label>
+            <input type="text" id="requesterName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="requesterMobile">Mobile Number *</label>
+            <input type="tel" id="requesterMobile" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="hospitalName">Hospital Name *</label>
+            <input type="text" id="hospitalName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="urgency">Urgency Level *</label>
+            <select id="urgency" required>
+              <option value="">Select Urgency</option>
+              <option value="critical">Critical (Within 6 hours)</option>
+              <option value="urgent">Urgent (Within 24 hours)</option>
+              <option value="normal">Normal (Within 3 days)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="hospitalAddress">Hospital Address *</label>
+          <textarea id="hospitalAddress" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="requiredBy">Required By Date *</label>
+            <input type="date" id="requiredBy" required>
+          </div>
+
+          <div class="form-group">
+            <label for="requiredByTime">Required By Time</label>
+            <input type="time" id="requiredByTime">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason for Blood Requirement</label>
+          <textarea id="reason" rows="3" placeholder="Medical condition, surgery type, etc."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="findDonors()">Find Donors</button>
+          <button type="submit" class="btn-primary">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- EMERGENCY SOS -->
+  <section id="emergency-sos" class="dashboard-section">
+    <div class="section-header">
+      <h2>🚨 Emergency SOS</h2>
+      <p>Critical blood needed? Send emergency alert</p>
+    </div>
+
+    <div class="sos-container">
+      <div class="sos-card">
+        <div class="sos-icon">🚨</div>
+        <h3>Emergency Blood Request</h3>
+        <p>Use this feature only in life-threatening situations</p>
+
+        <div class="sos-form">
+          <div class="form-group">
+            <label for="sosBloodType">Blood Type Needed *</label>
+            <select id="sosBloodType" required>
+              <option value="">Select Blood Type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="sosLocation">Current Location</label>
+            <input type="text" id="sosLocation" placeholder="Hospital name and address">
+          </div>
+
+          <div class="form-group">
+            <label for="sosMessage">Emergency Message</label>
+            <textarea id="sosMessage" rows="3" placeholder="Brief description of emergency..."></textarea>
+          </div>
+
+          <button class="btn-emergency" onclick="sendSOS()">
+            <i class="fas fa-exclamation-triangle"></i>
+            Send Emergency Alert
+          </button>
+        </div>
+      </div>
+
+      <div class="sos-info">
+        <h3>What happens when you send SOS?</h3>
+        <ul>
+          <li>Alert sent to all compatible donors within 10km radius</li>
+          <li>Push notifications sent to registered donors</li>
+          <li>Emergency hotline activated for immediate coordination</li>
+          <li>Hospital blood bank notified automatically</li>
+          <li>Real-time tracking of response status</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE MAP -->
+  <section id="live-map" class="dashboard-section">
+    <div class="section-header">
+      <h2>🗺️ Live Blood Donation Map</h2>
+      <p>Find donors, hospitals, and blood banks near you</p>
+    </div>
+
+    <div class="map-container">
+      <div class="map-placeholder">
+        <i class="fas fa-map-marked-alt"></i>
+        <h3>Interactive Map</h3>
+        <p>Real-time location of donors, hospitals, and blood banks</p>
+        <button class="btn-primary" onclick="loadMap()">Load Map</button>
+      </div>
+
+      <div class="map-controls">
+        <div class="control-group">
+          <h4>Filter by:</h4>
+          <label><input type="checkbox" checked> Donors</label>
+          <label><input type="checkbox" checked> Hospitals</label>
+          <label><input type="checkbox" checked> Blood Banks</label>
+          <label><input type="checkbox"> Emergency Requests</label>
+        </div>
+
+        <div class="control-group">
+          <h4>Blood Types:</h4>
+          <select multiple>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATION HISTORY -->
+  <section id="donation-history" class="dashboard-section">
+    <div class="section-header">
+      <h2>📋 Donation History</h2>
+      <p>Your blood donation journey</p>
+    </div>
+
+    <div class="history-container">
+      <div class="history-card">
+        <div class="history-header">
+          <div class="history-date">15 Dec 2024</div>
+          <div class="history-status completed">Completed</div>
+        </div>
+        <div class="history-details">
+          <h3>City General Hospital</h3>
+          <p>Blood Type: O+ | Units: 1 | Certificate: <a href="#">Download</a></p>
+        </div>
+      </div>
+
+      <div class="history-card">
+        <div class="history-header">
+          <div class="history-date">10 Oct 2024</div>
+          <div class="history-status completed">Completed</div>
+        </div>
+        <div class="history-details">
+          <h3>Apollo Blood Bank</h3>
+          <p>Blood Type: O+ | Units: 1 | Certificate: <a href="#">Download</a></p>
+        </div>
+      </div>
+
+      <div class="history-card">
+        <div class="history-header">
+          <div class="history-date">Scheduled: 20 Jan 2025</div>
+          <div class="history-status upcoming">Upcoming</div>
+        </div>
+        <div class="history-details">
+          <h3>Red Cross Center</h3>
+          <p>Blood Type: O+ | Units: 1</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="dashboard-section">
+    <div class="section-header">
+      <h2>📊 Your Impact Analytics</h2>
+      <p>Track your life-saving contributions</p>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>🩸 Total Donations</h3>
+        <div class="metric">
+          <span class="number">12</span>
+          <span class="change positive">+2 this year</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:75%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>❤️ Lives Saved</h3>
+        <div class="metric">
+          <span class="number">47</span>
+          <span class="change positive">+8 this year</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:85%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🏆 Donor Rank</h3>
+        <div class="metric">
+          <span class="number">Gold</span>
+          <span class="change positive">Top 10%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:90%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🎯 Response Rate</h3>
+        <div class="metric">
+          <span class="number">94%</span>
+          <span class="change positive">+5%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:94%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DASHBOARD FOOTER -->
+<footer class="dashboard-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>🩸 Blood Dashboard</h3>
+      <p>Every drop counts. Join thousands of donors saving lives every day.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <div class="footer-links">
+        <a href="#donate-blood">Donate Blood</a>
+        <a href="#request-blood">Request Blood</a>
+        <a href="#emergency-sos">Emergency SOS</a>
+        <a href="#live-map">Live Map</a>
+        <a href="#donation-history">History</a>
+        <a href="#analytics">Analytics</a>
+        <a href="../index.html">Home</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Emergency Contacts</h3>
+      <div class="footer-links">
+        <a href="tel:108">Ambulance: 108</a>
+        <a href="tel:102">Blood Bank: 102</a>
+        <a href="tel:104">Health Helpline: 104</a>
+        <a href="#">Emergency Guidelines</a>
+        <a href="#">Donor Rights</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Blood Facts</h3>
+      <div class="footer-links">
+        <a href="#">Blood Types</a>
+        <a href="#">Donation Process</a>
+        <a href="#">Health Benefits</a>
+        <a href="#">Myths & Facts</a>
+        <a href="#">Eligibility Criteria</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-logo">
+      <img src="../punardan.png" alt="Punardaan Logo">
+      <span>PUNARDAAN</span>
+    </div>
+    <p>&copy; 2026 Punardaan. All rights reserved. | Made with ❤️ for humanity</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="blood.js"></script>
+
+</body>
+</html>

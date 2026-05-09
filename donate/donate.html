@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Punardaan Donate</title>
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="donate.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+  <div class="logo">
+    <img 
+      src="../punardan.png" 
+      alt="Punardaan Logo"
+      class="logo-img"
+    >
+    <span>PUNARDAAN</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="./donate.html">Donate</a></li>
+    <li><a href="../NGO/NGO.html">NGOs</a></li>
+    <li><a href="../impact/impact.html">Impact</a></li>
+    <li><a href="../index.html">About</a></li>
+    <li><a href="../contact/contact.html">Contact</a></li>
+  </ul>
+
+  <div class="nav-buttons">
+    <button id="darkModeBtn">🌙</button>
+    <button class="login-btn" onclick="window.location.href='../auth/login.html'">Login</button>
+    <button class="register-btn" onclick="window.location.href='../auth/register.html'">Register</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<section class="donate-hero">
+
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="badge">
+      AI Powered Donation Platform
+    </span>
+
+    <h1>
+      Donate Resources.
+      <span>Transform Lives.</span>
+    </h1>
+
+    <p>
+      Your contribution can feed families,
+      save lives, educate children,
+      and support sustainable communities.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- DONATION TYPES -->
+
+<section class="donation-types">
+
+  <h2 class="section-title">
+    Choose Donation Type
+  </h2>
+
+  <div class="cards-grid">
+
+    <div class="donation-card orange-card" data-type="food">
+
+      <div class="icon">🍲</div>
+
+      <h3>Food Donation</h3>
+
+      <p>
+        Donate surplus food from restaurants,
+        events, homes, and kitchens.
+      </p>
+
+      <button onclick="window.location.href='../food/food.html'">Select</button>
+
+    </div>
+
+    <div class="donation-card red-card" data-type="blood">
+
+      <div class="icon">🩸</div>
+
+      <h3>Blood Donation</h3>
+
+      <p>
+        Help emergency patients by
+        becoming a blood donor.
+      </p>
+
+      <button onclick="window.location.href='../blood/blood.html'">Select</button>
+
+    </div>
+
+    <div class="donation-card blue-card" data-type="books">
+
+      <div class="icon">📚</div>
+
+      <h3>Book Donation</h3>
+
+      <p>
+        Share books with students,
+        NGOs, and educational shelters.
+      </p>
+
+      <button onclick="window.location.href='../books/books.html'">Select</button>
+
+    </div>
+
+    <div class="donation-card green-card" data-type="clothes">
+
+      <div class="icon">👕</div>
+
+      <h3>Clothes Donation</h3>
+
+      <p>
+        Donate reusable clothes and
+        help families in need.
+      </p>
+
+      <button onclick="window.location.href='../clothes/clothes.html'">Select</button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FORM SECTION -->
+
+<section class="form-section">
+
+  <div class="form-container">
+
+    <h2 id="formTitle">
+      Donation Form
+    </h2>
+
+    <form id="donationForm">
+
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="input-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="Enter phone number" required>
+      </div>
+      <div class="input-group">
+        <label>What you want to donate?</label>
+        <input type="text" placeholder="Enter donation type" required>
+      </div>
+      
+
+      <div class="input-group">
+        <label>City</label>
+        <input type="text" placeholder="Enter your city">
+      </div>
+
+      <!-- DYNAMIC FIELD -->
+
+      <div id="dynamicFields"></div>
+
+      <div class="input-group">
+        <label>Upload Image</label>
+        <input type="file">
+      </div>
+
+      <div class="input-group">
+        <label>Description</label>
+        <textarea placeholder="Write details here"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Submit Donation
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- AI FEATURES -->
+
+<section class="ai-features">
+
+  <h2 class="section-title">
+    AI Smart Features
+  </h2>
+
+  <div class="ai-grid">
+
+    <div class="ai-card">
+      <h3>AI Matching</h3>
+      <p>
+        Automatically matches nearby NGOs
+        and receivers.
+      </p>
+    </div>
+
+    <div class="ai-card">
+      <h3>Freshness Detection</h3>
+      <p>
+        AI analyzes food quality and usability.
+      </p>
+    </div>
+
+    <div class="ai-card">
+      <h3>Demand Prediction</h3>
+      <p>
+        Predicts resource demand in different regions.
+      </p>
+    </div>
+
+    <div class="ai-card">
+      <h3>Smart Routing</h3>
+      <p>
+        Optimized pickup and delivery routes.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- LIVE IMPACT -->
+
+<section class="impact-section">
+
+  <h2 class="section-title">
+    Live Impact
+  </h2>
+
+  <div class="impact-grid">
+
+    <div class="impact-card">
+      <h1 class="counter" data-target="15000">0</h1>
+      <p>Meals Saved</p>
+    </div>
+
+    <div class="impact-card">
+      <h1 class="counter" data-target="4000">0</h1>
+      <p>Blood Donations</p>
+    </div>
+
+    <div class="impact-card">
+      <h1 class="counter" data-target="12000">0</h1>
+      <p>Books Shared</p>
+    </div>
+
+    <div class="impact-card">
+      <h1 class="counter" data-target="18000">0</h1>
+      <p>Clothes Distributed</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SUCCESS MESSAGE -->
+
+<div id="successPopup">
+
+  <div class="popup-content">
+
+    <h2>🎉 Donation Submitted</h2>
+
+    <p>
+      Thank you for helping humanity through Punardaan.
+    </p>
+
+    <button id="closePopup">
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <h2>🌍 PUNARDAAN</h2>
+
+  <p>
+    Don’t Waste. Redistribute. Transform Lives.
+  </p>
+
+</footer>
+
+<script src="donate.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard | Punardaan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- Core Styles -->
+  <link rel="stylesheet" href="../css/global-styles.css"/>
+  
+  <style>
+    /* Dashboard Specific Styles */
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg-main);
+    }
+
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+    }
+
+    .main-content {
+      margin-left: 280px;
+      flex: 1;
+      padding: 40px;
+    }
+
+    .nav-item {
+      padding: 14px 20px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition);
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--secondary), #4338ca);
+      border-radius: 24px;
+      padding: 40px;
+      color: white;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-banner::after {
+      content: '📚';
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 80px;
+      opacity: 0.2;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .resource-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tag {
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .tag-books { background: #e0f2fe; color: #0369a1; }
+    .tag-stationery { background: #fef3c7; color: #92400e; }
+  </style>
+</head>
+<body class="light-mode">
+  
+  <div id="pageLoader" class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="logo mb-5">
+      <h2 style="font-weight: 800; letter-spacing: -1px;">PUNARDAAN</h2>
+    </div>
+
+    <nav style="flex: 1;">
+      <a href="#" class="nav-item active"><i class="fas fa-home"></i> Overview</a>
+      <a href="#" class="nav-item"><i class="fas fa-book"></i> My Requests</a>
+      <a href="#" class="nav-item"><i class="fas fa-search"></i> Find Resources</a>
+      <a href="#" class="nav-item"><i class="fas fa-graduation-cap"></i> Mentorship</a>
+      <a href="#" class="nav-item"><i class="fas fa-user"></i> Profile</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="nav-item logout-btn" style="width: 100%; border: none; background: none; text-align: left;">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+      <h2 id="welcomeText">Hello, <span id="userName">Student</span> 👋</h2>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <button id="darkModeBtn" class="btn btn-outline btn-sm">
+          <i id="themeIcon" class="fas fa-moon"></i>
+        </button>
+        <div class="profile-mini glass" style="padding: 5px 15px; border-radius: 12px; display: flex; align-items: center; gap: 10px;">
+          <img src="https://i.pravatar.cc/40?u=student" style="width: 35px; height: 35px; border-radius: 50%;">
+          <span style="font-weight: 600;">Student Portal</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="welcome-banner">
+      <h1>Accelerate Your Learning 🚀</h1>
+      <p>Request books, stationery, or mentorship from our global network of donors and NGOs.</p>
+      <button class="btn btn-primary" style="margin-top: 20px; background: white; color: var(--secondary);">
+        New Request
+      </button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background: #ecfdf5; color: #059669;">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div>
+          <p style="color: var(--text-muted); font-size: 14px;">Fulfilled Requests</p>
+          <h3 style="font-size: 24px; font-weight: 800;">12</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: #eff6ff; color: #2563eb;">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <div>
+          <p style="color: var(--text-muted); font-size: 14px;">Active Requests</p>
+          <h3 style="font-size: 24px; font-weight: 800;">3</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: #fff7ed; color: #ea580c;">
+          <i class="fas fa-star"></i>
+        </div>
+        <div>
+          <p style="color: var(--text-muted); font-size: 14px;">Knowledge Points</p>
+          <h3 style="font-size: 24px; font-weight: 800;">450</h3>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h3 style="margin-bottom: 24px;">Recommended for You</h3>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <span class="tag tag-books">Books</span>
+          <h4>Organic Chemistry Vol 1</h4>
+          <p style="color: var(--text-muted); margin: 10px 0;">Available at Delhi Public Library NGO</p>
+          <button class="btn btn-outline btn-sm" style="width: 100%;">Request This</button>
+        </div>
+        <div class="resource-card">
+          <span class="tag tag-stationery">Stationery</span>
+          <h4>Exam Kit (Pens, Calculator)</h4>
+          <p style="color: var(--text-muted); margin: 10px 0;">Donated by Aman Sharma</p>
+          <button class="btn btn-outline btn-sm" style="width: 100%;">Request This</button>
+        </div>
+        <div class="resource-card">
+          <span class="tag tag-books">E-Books</span>
+          <h4>Introduction to Algorithms</h4>
+          <p style="color: var(--text-muted); margin: 10px 0;">Digital copy available instantly</p>
+          <button class="btn btn-primary btn-sm" style="width: 100%;">Download Now</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../data/database.js"></script>
+  <script src="../js/core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = Core.state.user;
+        if (user && user.name) {
+            document.getElementById('userName').textContent = user.name.split(' ')[0];
+        }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books Donation Dashboard | Punardaan</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../shared/navbar.css">
+  <link rel="stylesheet" href="../shared/dashboard.css">
+  <link rel="stylesheet" href="../shared/footer.css">
+  <link rel="stylesheet" href="books.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR TOGGLE (Mobile) -->
+<button class="sidebar-toggle" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- DASHBOARD SIDEBAR -->
+<div class="dashboard-sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3 class="sidebar-title">📚 Books Dashboard</h3>
+    <p class="sidebar-subtitle">Share knowledge, change lives</p>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a></li>
+    <li><a href="#donate-books"><i class="fas fa-book icon"></i> Donate Books</a></li>
+    <li><a href="#exchange-books"><i class="fas fa-exchange-alt icon"></i> Book Exchange</a></li>
+    <li><a href="#my-library"><i class="fas fa-books icon"></i> My Library</a></li>
+    <li><a href="#requests"><i class="fas fa-hand-paper icon"></i> Book Requests</a></li>
+    <li><a href="#analytics"><i class="fas fa-chart-bar icon"></i> Analytics</a></li>
+    <li><a href="#wishlist"><i class="fas fa-heart icon"></i> Wishlist</a></li>
+    <li><a href="#settings"><i class="fas fa-cog icon"></i> Settings</a></li>
+  </ul>
+</div>
+
+<!-- DASHBOARD NAVBAR -->
+<nav class="dashboard-navbar">
+  <a href="../index.html" class="navbar-logo">
+    <img src="../punardan.png" alt="Punardaan Logo">
+    <span>PUNARDAAN</span>
+  </a>
+
+  <div class="navbar-menu">
+    <a href="../food/food.html">Food</a>
+    <a href="../blood/blood.html">Blood</a>
+    <a href="#dashboard">Books</a>
+    <a href="../clothes/clothes.html">Clothes</a>
+  </div>
+
+  <div class="navbar-actions">
+    <button class="notification-btn" onclick="showNotifications()">
+      <i class="fas fa-bell"></i>
+      <span class="notification-badge">7</span>
+    </button>
+
+    <div class="profile-section" onclick="toggleProfileMenu()">
+      <div class="profile-avatar">JD</div>
+      <div class="profile-info">
+        <span class="profile-name">John Doe</span>
+        <span class="profile-role">Book Donor</span>
+      </div>
+    </div>
+
+    <button id="darkModeBtn" onclick="toggleDarkMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="dashboard-main">
+
+  <!-- DASHBOARD OVERVIEW -->
+  <section id="dashboard" class="dashboard-section">
+    <div class="section-header">
+      <h1>📚 Books Donation Dashboard</h1>
+      <p>Knowledge is power. Share it with those who need it most</p>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="1247">0</h2>
+          <p>Books Donated</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="89">0</h2>
+          <p>Students Helped</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🔄</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="156">0</h2>
+          <p>Books Exchanged</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-info">
+          <h2 class="counter" data-target="98">0</h2>
+          <p>Match Rate</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI BOOK RECOMMENDATIONS -->
+    <div class="ai-recommendations">
+      <h2>🤖 AI Book Recommendations</h2>
+      <div class="book-recommendations">
+        <div class="book-card">
+          <div class="book-cover">
+           
+          </div>
+          <div class="book-info">
+            <h3>Advanced Mathematics</h3>
+            <p>Grade 10 students need this urgently</p>
+            <div class="book-meta">
+              <span class="subject">Mathematics</span>
+              <span class="distance">2.3 km away</span>
+            </div>
+            <button class="btn-primary">Donate Now</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+           
+          </div>
+          <div class="book-info">
+            <h3>Physics Fundamentals</h3>
+            <p>School library running low on science books</p>
+            <div class="book-meta">
+              <span class="subject">Physics</span>
+              <span class="distance">1.8 km away</span>
+            </div>
+            <button class="btn-primary">Donate Now</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover">
+           
+          </div>
+          <div class="book-info">
+            <h3>World History</h3>
+            <p>Orphanage children love history books</p>
+            <div class="book-meta">
+              <span class="subject">History</span>
+              <span class="distance">3.1 km away</span>
+            </div>
+            <button class="btn-primary">Donate Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="recent-activity">
+      <h2>📋 Recent Activity</h2>
+      <div class="activity-feed">
+        <div class="activity-item">
+          <div class="activity-icon">📚</div>
+          <div class="activity-content">
+            <p><strong>You donated</strong> "Chemistry Basics" to City School</p>
+            <span class="activity-time">2 hours ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">🔄</div>
+          <div class="activity-content">
+            <p><strong>Book exchanged:</strong> Your "English Grammar" for "Biology Textbook"</p>
+            <span class="activity-time">1 day ago</span>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-icon">❤️</div>
+          <div class="activity-content">
+            <p><strong>New request:</strong> Orphanage needs story books for children</p>
+            <span class="activity-time">2 days ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE BOOKS -->
+  <section id="donate-books" class="dashboard-section">
+    <div class="section-header">
+      <h2>📚 Donate Books</h2>
+      <p>Share your books with students and learners in need</p>
+    </div>
+
+    <div class="donation-form-container">
+      <form id="bookDonationForm" class="donation-form">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="donorName">Donor Name *</label>
+            <input type="text" id="donorName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mobile">Mobile Number *</label>
+            <input type="tel" id="mobile" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email">
+          </div>
+
+          <div class="form-group">
+            <label for="bookCondition">Book Condition *</label>
+            <select id="bookCondition" required>
+              <option value="">Select Condition</option>
+              <option value="new">New/Unused</option>
+              <option value="excellent">Excellent</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair</option>
+              <option value="poor">Poor (but readable)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- BOOK DETAILS -->
+        <div class="book-details-section">
+          <h3>📖 Book Details</h3>
+          <div id="bookList">
+            <div class="book-entry">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Book Title *</label>
+                  <input type="text" class="bookTitle" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Author</label>
+                  <input type="text" class="bookAuthor">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Subject/Category *</label>
+                  <select class="bookSubject" required>
+                    <option value="">Select Subject</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="physics">Physics</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="biology">Biology</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                    <option value="computer">Computer Science</option>
+                    <option value="literature">Literature</option>
+                    <option value="story">Story Books</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Class/Grade</label>
+                  <select class="bookGrade">
+                    <option value="">Select Grade</option>
+                    <option value="1">Class 1</option>
+                    <option value="2">Class 2</option>
+                    <option value="3">Class 3</option>
+                    <option value="4">Class 4</option>
+                    <option value="5">Class 5</option>
+                    <option value="6">Class 6</option>
+                    <option value="7">Class 7</option>
+                    <option value="8">Class 8</option>
+                    <option value="9">Class 9</option>
+                    <option value="10">Class 10</option>
+                    <option value="11">Class 11</option>
+                    <option value="12">Class 12</option>
+                    <option value="college">College</option>
+                    <option value="general">General</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="number" class="bookQuantity" min="1" value="1">
+                </div>
+
+                <div class="form-group">
+                  <label>ISBN (Optional)</label>
+                  <input type="text" class="bookISBN" placeholder="ISBN number">
+                </div>
+              </div>
+
+              <button type="button" class="btn-secondary remove-book" onclick="removeBook(this)">
+                <i class="fas fa-trash"></i> Remove Book
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-secondary" onclick="addAnotherBook()">
+            <i class="fas fa-plus"></i> Add Another Book
+          </button>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pickupAddress">Pickup Address *</label>
+            <textarea id="pickupAddress" rows="3" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="preferredTime">Preferred Pickup Time *</label>
+            <select id="preferredTime" required>
+              <option value="">Select Time</option>
+              <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+              <option value="afternoon">Afternoon (1:00 PM - 5:00 PM)</option>
+              <option value="evening">Evening (6:00 PM - 9:00 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- BOOK PHOTOS -->
+        <div class="form-group">
+          <label>Upload Book Photos</label>
+          <div class="image-upload-area" onclick="triggerFileInput()">
+            <i class="fas fa-camera"></i>
+            <p>Click to upload book photos</p>
+            <span>PNG, JPG up to 5MB each</span>
+            <input type="file" id="bookImages" multiple accept="image/*" style="display:none;">
+          </div>
+          <div id="imagePreview" class="image-preview"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" rows="3" placeholder="Any special instructions..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+          <button type="submit" class="btn-primary">Schedule Pickup</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- BOOK EXCHANGE -->
+  <section id="exchange-books" class="dashboard-section">
+    <div class="section-header">
+      <h2>🔄 Book Exchange</h2>
+      <p>Exchange your books with others in the community</p>
+    </div>
+
+    <div class="exchange-container">
+      <div class="exchange-section">
+        <h3>📚 Books I Have</h3>
+        <div class="my-books">
+          <div class="book-item">
+            <div class="book-cover-small">
+              <img src="https://via.placeholder.com/80x100/4f46e5/white?text=Book" alt="Book">
+            </div>
+            <div class="book-details">
+              <h4>Mathematics Textbook</h4>
+              <p>Class 10</p>
+              <span class="condition good">Good</span>
+            </div>
+            <button class="btn-exchange">List for Exchange</button>
+          </div>
+
+          <div class="book-item">
+            <div class="book-cover-small">
+              <img src="https://via.placeholder.com/80x100/059669/white?text=Book" alt="Book">
+            </div>
+            <div class="book-details">
+              <h4>Physics Guide</h4>
+              <p>Class 12</p>
+              <span class="condition excellent">Excellent</span>
+            </div>
+            <button class="btn-exchange">List for Exchange</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="exchange-section">
+        <h3>🔍 Find Exchange Partners</h3>
+        <div class="exchange-search">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="exchangeSubject">Subject</label>
+              <select id="exchangeSubject">
+                <option value="">All Subjects</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="physics">Physics</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="biology">Biology</option>
+                <option value="english">English</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exchangeGrade">Grade</label>
+              <select id="exchangeGrade">
+                <option value="">All Grades</option>
+                <option value="10">Class 10</option>
+                <option value="11">Class 11</option>
+                <option value="12">Class 12</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="searchExchangePartners()">
+            <i class="fas fa-search"></i> Find Partners
+          </button>
+        </div>
+
+        <div class="exchange-results" id="exchangeResults">
+          <p>Search for exchange partners to see results here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY LIBRARY -->
+  <section id="my-library" class="dashboard-section">
+    <div class="section-header">
+      <h2>📚 My Library</h2>
+      <p>Manage your donated and exchanged books</p>
+    </div>
+
+    <div class="library-tabs">
+      <button class="tab-btn active" onclick="switchTab('donated')">Donated Books</button>
+      <button class="tab-btn" onclick="switchTab('exchanged')">Exchanged Books</button>
+      <button class="tab-btn" onclick="switchTab('received')">Received Books</button>
+    </div>
+
+    <div class="library-content">
+      <div id="donated-books" class="tab-content active">
+        <div class="book-grid">
+          <div class="library-book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/120x160/4f46e5/white?text=Math" alt="Book">
+            </div>
+            <div class="book-info">
+              <h4>Advanced Mathematics</h4>
+              <p>Donated to: City School</p>
+              <span class="status completed">Delivered</span>
+              <span class="date">15 Dec 2024</span>
+            </div>
+          </div>
+
+          <div class="library-book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/120x160/059669/white?text=Science" alt="Book">
+            </div>
+            <div class="book-info">
+              <h4>Chemistry Basics</h4>
+              <p>Donated to: Hope Orphanage</p>
+              <span class="status completed">Delivered</span>
+              <span class="date">10 Dec 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="exchanged-books" class="tab-content">
+        <div class="book-grid">
+          <div class="library-book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/120x160/dc2626/white?text=English" alt="Book">
+            </div>
+            <div class="book-info">
+              <h4>English Grammar</h4>
+              <p>Exchanged with: Sarah Johnson</p>
+              <span class="status completed">Exchanged</span>
+              <span class="date">5 Dec 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="received-books" class="tab-content">
+        <div class="book-grid">
+          <div class="library-book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/120x160/7c3aed/white?text=Biology" alt="Book">
+            </div>
+            <div class="book-info">
+              <h4>Biology Textbook</h4>
+              <p>Received from: Mike Wilson</p>
+              <span class="status completed">Received</span>
+              <span class="date">5 Dec 2024</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK REQUESTS -->
+  <section id="requests" class="dashboard-section">
+    <div class="section-header">
+      <h2>📖 Book Requests</h2>
+      <p>Help fulfill book requests from students and institutions</p>
+    </div>
+
+    <div class="requests-container">
+      <div class="request-card">
+        <div class="request-header">
+          <h3>Mathematics Books Needed</h3>
+          <span class="urgency high">High Priority</span>
+        </div>
+        <div class="request-details">
+          <p><strong>Requested by:</strong> City Public School</p>
+          <p><strong>Subject:</strong> Mathematics (Class 8-10)</p>
+          <p><strong>Quantity:</strong> 25 books</p>
+          <p><strong>Reason:</strong> School library expansion</p>
+          <p><strong>Distance:</strong> 2.5 km</p>
+        </div>
+        <div class="request-actions">
+          <button class="btn-primary">Fulfill Request</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+
+      <div class="request-card">
+        <div class="request-header">
+          <h3>Story Books for Children</h3>
+          <span class="urgency medium">Medium Priority</span>
+        </div>
+        <div class="request-details">
+          <p><strong>Requested by:</strong> Hope Orphanage</p>
+          <p><strong>Subject:</strong> Children's Literature</p>
+          <p><strong>Quantity:</strong> 15 books</p>
+          <p><strong>Reason:</strong> Reading program for kids</p>
+          <p><strong>Distance:</strong> 3.2 km</p>
+        </div>
+        <div class="request-actions">
+          <button class="btn-primary">Fulfill Request</button>
+          <button class="btn-secondary">View Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section id="analytics" class="dashboard-section">
+    <div class="section-header">
+      <h2>📊 Your Impact Analytics</h2>
+      <p>Track your contribution to education</p>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="analytics-card">
+        <h3>📚 Total Books Donated</h3>
+        <div class="metric">
+          <span class="number">1,247</span>
+          <span class="change positive">+89 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:78%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🎓 Students Reached</h3>
+        <div class="metric">
+          <span class="number">892</span>
+          <span class="change positive">+45 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:85%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🔄 Books Exchanged</h3>
+        <div class="metric">
+          <span class="number">156</span>
+          <span class="change positive">+12 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:67%"></div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>🏆 Knowledge Score</h3>
+        <div class="metric">
+          <span class="number">4.8/5</span>
+          <span class="change positive">+0.2 this month</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:96%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WISHLIST -->
+  <section id="wishlist" class="dashboard-section">
+    <div class="section-header">
+      <h2>❤️ My Wishlist</h2>
+      <p>Books you'd like to read or need for studies</p>
+    </div>
+
+    <div class="wishlist-container">
+      <div class="add-wishlist">
+        <input type="text" id="wishlistBook" placeholder="Enter book title or ISBN">
+        <button class="btn-primary" onclick="addToWishlist()">
+          <i class="fas fa-plus"></i> Add to Wishlist
+        </button>
+      </div>
+
+      <div class="wishlist-items">
+        <div class="wishlist-item">
+          <div class="book-info">
+            <h4>Data Structures and Algorithms</h4>
+            <p>Computer Science</p>
+          </div>
+          <div class="wishlist-actions">
+            <span class="availability available">Available for exchange</span>
+            <button class="btn-secondary">Find Donor</button>
+          </div>
+        </div>
+
+        <div class="wishlist-item">
+          <div class="book-info">
+            <h4>Organic Chemistry</h4>
+            <p>Chemistry</p>
+          </div>
+          <div class="wishlist-actions">
+            <span class="availability unavailable">Not available</span>
+            <button class="btn-secondary">Set Alert</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- DASHBOARD FOOTER -->
+<footer class="dashboard-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>📚 Books Dashboard</h3>
+      <p>Knowledge shared is knowledge multiplied. Join thousands of book donors making education accessible.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <div class="footer-links">
+        <a href="#donate-books">Donate Books</a>
+        <a href="#exchange-books">Book Exchange</a>
+        <a href="#my-library">My Library</a>
+        <a href="#requests">Book Requests</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#wishlist">Wishlist</a>
+        <a href="../index.html">Home</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Book Categories</h3>
+      <div class="footer-links">
+        <a href="#">Academic Books</a>
+        <a href="#">Story Books</a>
+        <a href="#">Reference Books</a>
+        <a href="#">Competitive Exams</a>
+        <a href="#">Children's Books</a>
+        <a href="#">Professional Books</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Education Support</h3>
+      <div class="footer-links">
+        <a href="#">School Libraries</a>
+        <a href="#">Orphanages</a>
+        <a href="#">Rural Schools</a>
+        <a href="#">Underprivileged Students</a>
+        <a href="#">Teacher Resources</a>
+        <a href="#">Digital Learning</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-logo">
+      <img src="../punardan.png" alt="Punardaan Logo">
+      <span>PUNARDAAN</span>
+    </div>
+    <p>&copy; 2026 Punardaan. All rights reserved. | Made with ❤️ for education</p>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="books.js"></script>
+
+</body>
+</html>
